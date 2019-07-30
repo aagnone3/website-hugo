@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors | Anthony Agnone</title>
+    <link>https://anthonyagnone.com/authors/</link>
+      <atom:link href="https://anthonyagnone.com/authors/index.xml" rel="self" type="application/rss+xml" />
+    <description>Authors</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 19 Jul 2019 18:29:33 +0000</lastBuildDate>
+    <image>
+      <url>https://anthonyagnone.com/img/me.jpeg</url>
+      <title>Authors</title>
+      <link>https://anthonyagnone.com/authors/</link>
+    </image>
+    
+    <item>
+      <title>anthonyagnone</title>
+      <link>https://anthonyagnone.com/authors/anthonyagnone/</link>
+      <pubDate>Fri, 19 Jul 2019 18:29:33 +0000</pubDate>
+      <guid>https://anthonyagnone.com/authors/anthonyagnone/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://anthonyagnone.com/authors/admin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://anthonyagnone.com/authors/admin/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m an avid applied researcher, who loves playing at the intersection of signal processing, machine learning, and software engineering. I currently work at Pindrop to design and build audio-based biometrics and fraud detection solutions.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

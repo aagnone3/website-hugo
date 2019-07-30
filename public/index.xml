@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Anthony Agnone</title>
+    <link>https://anthonyagnone.com/</link>
+      <atom:link href="https://anthonyagnone.com/index.xml" rel="self" type="application/rss+xml" />
+    <description>Anthony Agnone</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 19 Jul 2019 18:29:33 +0000</lastBuildDate>
+    <image>
+      <url>https://anthonyagnone.com/img/me.jpeg</url>
+      <title>Anthony Agnone</title>
+      <link>https://anthonyagnone.com/</link>
+    </image>
+    
+    <item>
+      <title>Visualizing House Price Distributions</title>
+      <link>https://anthonyagnone.com/post/visualizing-house-price-distributions/</link>
+      <pubDate>Fri, 19 Jul 2019 18:29:33 +0000</pubDate>
+      <guid>https://anthonyagnone.com/post/visualizing-house-price-distributions/</guid>
+      <description>
+
+&lt;h3 id=&#34;wait-but-nbsp-why&#34;&gt;Wait, but&amp;nbsp;Why?&lt;/h3&gt;
+
+&lt;p&gt;I’m in the process of closing on my first home in Atlanta, GA, and have been heavily using various real estate websites like Zillow, Redfin, and Trulia. I’ve also been toying with &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://www.zillow.com/howto/api/APIOverview.htm&#34; target=&#34;_blank&#34;&gt;Zillow’s API&lt;/a&gt;, although somewhat spotty in functionality and documentation. Despite its shortcomings, I was fully inspired once I read the &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://towardsdatascience.com/rat-city-visualizing-new-york-citys-rat-problem-f7aabd6900b2&#34; target=&#34;_blank&#34;&gt;post&lt;/a&gt; by &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://medium.com/u/5164378fc848&#34; target=&#34;_blank&#34;&gt;Lukas Frei&lt;/a&gt; on using the &lt;code&gt;folium&lt;/code&gt; library to seamlessly create geography-based visualizations. A few days and some quick fun later, I’ve combined Zillow and Folium to make some cool visualizations of housing prices both within Atlanta and across the U.S.&lt;/p&gt;
+
+&lt;h3 id=&#34;topics&#34;&gt;Topics&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;API integration&lt;/li&gt;
+&lt;li&gt;Graph traversal&lt;/li&gt;
+&lt;li&gt;Visualization&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;a-small-working-nbsp-example&#34;&gt;A Small Working&amp;nbsp;Example&lt;/h3&gt;
+
+&lt;p&gt;Let’s start simple by using some &lt;a href=&#34;https://github.com/aagnone3/zillium/blob/master/data/State_MedianValuePerSqft_AllHomes.csv&#34; rel=&#34;noreferrer noopener&#34; target=&#34;_blank&#34;&gt;pre-aggregated data&lt;/a&gt; I downloaded from the Zillow website. This data set shows the median price by square foot for every state in the U.S. for each month from April 1996 to May 2019. Naturally, one could build a rich visualization on the progression of these prices over time; however, let’s stick with the most recent prices for now, which are in the last column of the file.&lt;/p&gt;
+
+&lt;p&gt;Having a look at the top-10 states, there aren’t many surprises. To be clear, I was initially caught off guard by the ordering of some of these, notably D.C. and Hawaii topping the chart. However, recall the normalization of “per square foot” in the metric. By that token, I’m maybe more surprised now that California still hits #3, given its size.&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://cdn-images-1.medium.com/max/800/1*m8dv-PmWxEdxXc-3f-O-Wg.png&#34; alt=&#34;&#34; /&gt;&lt;figcaption&gt;Top 10 price/sqft in thousands of $$$ (May&amp;nbsp;2019)&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Anyways, onto the show! Since this is a visualization article, I’ll avoid throwing too many lines of code in your face, and link it all to you to it at the end of the article. In short, I downloaded a GeoJSON file of the U.S. states from the &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://github.com/python-visualization/folium&#34; target=&#34;_blank&#34;&gt;folium repo&lt;/a&gt;. This was a great find, because it immediately gave me the schema of the data that I needed to give to folium for a seamless process; the only information I needed to add was the pricing data (to generate coloring in the final map). After providing that, a mere 5 lines of code got me the following plot:&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://cdn-images-1.medium.com/max/800/1*otHI92R87cptloOqONQGxA.png&#34; alt=&#34;&#34; /&gt;&lt;figcaption&gt;Heatmap of price/sqft of homes in the U.S. for May&amp;nbsp;2019&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&#34;one-step-nbsp-further&#34;&gt;One Step&amp;nbsp;Further&lt;/h3&gt;
+
+&lt;p&gt;Now that I’d dipped my toes into the waters of Zillow and Folium, I was ready to be immersed. I decided to create a heat map of Metro Atlanta housing prices. One of the drawbacks of the Zillow API is that it’s rather limited in search functionality — I couldn’t find any way to perform a search based on lat/long coordinates, which would have been quite convenient for creating a granular heat map. Nevertheless, I took it as an opportunity to brush up on some crawler-style code; I used the results of an initial search by a city’s name as seeds for future calls to get the &lt;a href=&#34;https://en.wikipedia.org/wiki/Comparables&#34; rel=&#34;noreferrer noopener&#34; target=&#34;_blank&#34;&gt;comps&lt;/a&gt; (via the &lt;a href=&#34;https://www.zillow.com/howto/api/GetComps.htm&#34; rel=&#34;noreferrer noopener&#34; target=&#34;_blank&#34;&gt;GetComps&lt;/a&gt; endpoint) of those homes.&lt;/p&gt;
+
+&lt;p&gt;It’s worth noting that Zillow does have plenty of URL-based search filters that one could use to e.g. search by lat/long (see below). Obtaining the homes from the web page then becomes a scraping job, though, and you are subject to any sudden changes in Zillow’s web page structure. That being said, scraping projects can be a lot of fun; if you’d like to build this into what I made, let me know!&lt;/p&gt;
+
+&lt;pre class=&#34;wp-block-preformatted&#34;&gt;# an example of a Zillow search URL, with plenty of specifications&lt;br /&gt;&lt;a href=&#34;https://www.zillow.com/atlanta-ga/houses/2-_beds/2.0-_baths/?searchQueryState=%7B%22pagination%22:%7B%7D,%22mapBounds%22:%7B%22west%22:-84.88217862207034,%22east%22:-84.07880337792972,%22south%22:33.53377471775447,%22north%22:33.999556422130006%7D,%22usersSearchTerm%22:%22Atlanta,%20GA%22,%22regionSelection%22:[%7B%22regionId%22:37211,%22regionType%22:6%7D],%22isMapVisible%22:true,%22mapZoom%22:11,%22filterState%22:%7B%22price%22:%7B%22min%22:300000,%22max%22:600000%7D,%22monthlyPayment%22:%7B%22min%22:1119,%22max%22:2237%7D,%22hoa%22:%7B%22max%22:200%7D,%22beds%22:%7B%22min%22:2%7D,%22baths%22:%7B%22min%22:2%7D,%22sqft%22:%7B%22min%22:1300%7D,%22isAuction%22:%7B%22value%22:false%7D,%22isMakeMeMove%22:%7B%22value%22:false%7D,%22isMultiFamily%22:%7B%22value%22:false%7D,%22isManufactured%22:%7B%22value%22:false%7D,%22isLotLand%22:%7B%22value%22:false%7D,%22isPreMarketForeclosure%22:%7B%22value%22:false%7D,%22isPreMarketPreForeclosure%22:%7B%22value%22:false%7D%7D,%22isListVisible%22:true%7D&#34; rel=&#34;noreferrer noopener&#34; target=&#34;_blank&#34;&gt;https://www.zillow.com/atlanta-ga/houses/2-_beds/2.0-_baths/?searchQueryState={%22pagination%22:{},%22mapBounds%22:{%22west%22:-84.88217862207034,%22east%22:-84.07880337792972,%22south%22:33.53377471775447,%22north%22:33.999556422130006},%22usersSearchTerm%22:%22Atlanta,%20GA%22,%22regionSelection%22:[{%22regionId%22:37211,%22regionType%22:6}],%22isMapVisible%22:true,%22mapZoom%22:11,%22filterState%22:{%22price%22:{%22min%22:300000,%22max%22:600000},%22monthlyPayment%22:{%22min%22:1119,%22max%22:2237},%22hoa%22:{%22max%22:200},%22beds%22:{%22min%22:2},%22baths%22:{%22min%22:2},%22sqft%22:{%22min%22:1300},%22isAuction%22:{%22value%22:false},%22isMakeMeMove%22:{%22value%22:false},%22isMultiFamily%22:{%22value%22:false},%22isManufactured%22:{%22value%22:false},%22isLotLand%22:{%22value%22:false},%22isPreMarketForeclosure%22:{%22value%22:false},%22isPreMarketPreForeclosure%22:{%22value%22:false}},%22isListVisible%22:true}&lt;/a&gt;&lt;/pre&gt;
+
+&lt;p&gt;Returning to the chosen path, I mentioned that I used initial results as entry points into the web of homes in a given city. With those entry points, I kept recursing into calls for each homes comps. An important assumption here is that Zillow’s definition of similarity between houses includes location proximity in addition to other factors. Without location proximity, the comp-based traversal of homes will be very non-smooth with respect to location.&lt;/p&gt;
+
+&lt;p&gt;So, what algorithms are at our disposal for traversing through a network of nodes in different ways? Of course, breadth-first search (BFS) and depth-first search (DFS) quickly come to mind. For the curious, have a look at the basic logic flow of it below. Besides a set membership guard, new homes are only added to the collection when they satisfy the constraints asserted in the &lt;code&gt;meets_criteria&lt;/code&gt; function. For now, I do a simple L2 distance check between a pre-defined root lat/long location and the current home’s location. This criterion encouraged the search to stay local to the root, for the purposes of a well-connected and granular heat map. The implementation below uses DFS by popping off the end of the list (line 5) and adding to the end of the list (14), but BFS can be quickly achieved by changing either line (but not both) to instead use the front of the list.&lt;/p&gt;
+
+&lt;p&gt;Letting this algorithm run for 10,000 iterations on Atlanta homes produces the following map in just a few minutes! What’s more, the &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://anthonyagnone.com/wp-shares-aagnone/atlanta_heatmap.html&#34; target=&#34;_blank&#34;&gt;generated web page&lt;/a&gt; by folium is interactive, allowing common map navigation tools like zooming and panning. To prove out its modularity, I generated some smaller-scale maps of prices for &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://anthonyagnone.com/wp-shares-aagnone/boston_heatmap.html&#34; target=&#34;_blank&#34;&gt;Boston, MA&lt;/a&gt; and &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://anthonyagnone.com/wp-shares-aagnone/seattle_heatmap.html&#34; target=&#34;_blank&#34;&gt;Seattle, WA&lt;/a&gt; as well.&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://cdn-images-1.medium.com/max/800/1*Q81SBWiXe77l8xq8oqpgyw.png&#34; alt=&#34;&#34; /&gt;&lt;figcaption&gt;Heat map of Atlanta housing prices. See the interactive version&amp;nbsp;&lt;a href=&#34;https://anthonyagnone.com/wp-shares-aagnone/atlanta_heatmap.html&#34; rel=&#34;noreferrer noopener&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&#34;the-code&#34;&gt;The Code&lt;/h3&gt;
+
+&lt;p&gt;As promised, &lt;a href=&#34;https://github.com/aagnone3/zillium&#34; target=&#34;_blank&#34;&gt;here’s the project&lt;/a&gt;. It has a Make+Docker setup for ease of use and reproducibility. If you’d like to get an intro to how these two tools come together nicely for reproducible data science, &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://anthonyagnone.com/2019/07/10/towards-efficient-and-reproducible-ml-workflows-part-1-analysis/&#34; target=&#34;_blank&#34;&gt;keep reading here&lt;/a&gt;. Either way, the &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://github.com/aagnone3/zillium/blob/master/README.md&#34; target=&#34;_blank&#34;&gt;README&lt;/a&gt; will get you up and running in no time, either via script or Jupyter notebook. Happy viz!&lt;/p&gt;
+
+&lt;h3 id=&#34;what-now&#34;&gt;What Now?&lt;/h3&gt;
+
+&lt;p&gt;There are numerous different directions in which we could take this logic next. I’ve detailed a few below for stimulation, but I’d prefer to move in the direction that has the most support, impact, and collaboration. What do you think?&lt;/p&gt;
+
+&lt;!-- AddThis Advanced Settings generic via filter on the_content --&gt;
+
+&lt;!-- AddThis Share Buttons generic via filter on the_content --&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Reproducible Data Processing: Make &#43; Docker</title>
+      <link>https://anthonyagnone.com/post/reproducible-data-processing-make-docker/</link>
+      <pubDate>Wed, 10 Jul 2019 18:11:01 +0000</pubDate>
+      <guid>https://anthonyagnone.com/post/reproducible-data-processing-make-docker/</guid>
+      <description>
+
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;When performing experiments in data science and machine learning, two main blockers of initial progress are delays building/using &amp;#8220;base code&amp;#8221; and lack of reproducibility. Thanks to some great open source tools, you don&amp;#8217;t have to be a software guru to circumvent these obstacles and get meaning from your data in a much smoother process.&lt;/p&gt;
+
+&lt;p class=&#34;has-medium-font-size&#34;&gt;
+  &amp;#8220;Hey there, I got this error when I ran your code&amp;#8230;can you help me?&amp;#8221;
+&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-1024x254.png&#34; alt=&#34;&#34; class=&#34;wp-image-89&#34; srcset=&#34;https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-1024x254.png 1024w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-300x75.png 300w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-768x191.png 768w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-850x211.png 850w&#34; sizes=&#34;(max-width: 1024px) 100vw, 1024px&#34; /&gt;&lt;figcaption&gt;oh yeah, that file&amp;#8230;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&amp;#8230;and it&amp;#8217;s something facepalm-worthy. Here you are, trying to hit the ground running with a friend or colleague on an interesting idea, and you&amp;#8217;re now side-tracked debugging a file-not-found error. Welcome back to your intro programming course!&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;m sure the owner of the code also loves nothing more than to spend a bunch of time helping someone step through these issues at a snail&amp;#8217;s pace. The sheer euphoria you two have just shared over the promise of recent experimental results has now morphed into unspoken embarrassment and frustration that the demonstration has failed before showing any worth, whatsoever.&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://anthonyagnone.com/wp-content/uploads/2019/07/over.jpg&#34; alt=&#34;&#34; class=&#34;wp-image-121&#34; srcset=&#34;https://anthonyagnone.com/wp-content/uploads/2019/07/over.jpg 621w, https://anthonyagnone.com/wp-content/uploads/2019/07/over-300x194.jpg 300w&#34; sizes=&#34;(max-width: 621px) 100vw, 621px&#34; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;But it&amp;#8217;s fine. It&amp;#8217;s fine! Your buddy knows just where to find that missing file. You&amp;#8217;re told that you will have it within minutes, and then you will be on your way!&lt;/p&gt;
+
+&lt;p class=&#34;has-medium-font-size&#34;&gt;
+  &amp;#8220;Alright, download that file &amp;#8212; I just emailed it to you. Then run train.py, you should get 98% accuracy in 20 epochs.&amp;#8221;
+&lt;/p&gt;
+
+&lt;p&gt;Aha! This is it! The time has come to join the ranks of esteemed data magicians, casting one keyboard spell after another, watching your data baby&amp;#8217;s brain get progressively more advanced as it beckons for a role in a new Terminator movie! Let&amp;#8217;s see what we get!&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM.png&#34; alt=&#34;&#34; class=&#34;wp-image-90&#34; srcset=&#34;https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM.png 474w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM-300x128.png 300w&#34; sizes=&#34;(max-width: 474px) 100vw, 474px&#34; /&gt;&lt;figcaption&gt;but I did what you said 🙁&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&amp;#8230;yeah, we&amp;#8217;ve all been there.&lt;/p&gt;
+
+&lt;p&gt;What could it be? Well, maybe it&amp;#8217;s something obvious. I know python, and I know what your code should be doing. I&amp;#8217;ll just pop open your &lt;code&gt;train.py&lt;/code&gt; to poke around and&amp;#8230;NOPE.&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://i.chzbgr.com/full/6157943808/h9C44E570/&#34; alt=&#34;&#34; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Don&amp;#8217;t worry, this isn&amp;#8217;t going to be a pinky-waving article about how to always write a software masterpiece and scoff at anything you deem insubordinate. That&amp;#8217;s a sticky subject in general, as it&amp;#8217;s wrought with subjectivity and competing standards. These examples aim to just emphasize how there are a myriad of ways in which we would &lt;span style=&#34;text-decoration: underline;&#34;&gt;not&lt;/span&gt; prefer for new experiments to start.&lt;/p&gt;
+
+&lt;p&gt;We&amp;#8217;re interested in &lt;em&gt;re-producing&lt;/em&gt; and &lt;em&gt;improving&lt;/em&gt; on results in a &lt;em&gt;convenient&lt;/em&gt; fashion, not stumbling to re-create past achievements. With that in mind, let&amp;#8217;s have a look at some popular tools that can be used to streamline the start of any new ML software project: &lt;a href=&#34;https://www.docker.com/&#34; target=&#34;_blank&#34;&gt;Docker&lt;/a&gt; and &lt;a href=&#34;https://www.gnu.org/software/make/&#34; target=&#34;_blank&#34;&gt;Make&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;docker&#34;&gt;Docker&lt;/h2&gt;
+
+&lt;p&gt;The python ecosystem has some great features for dealing with dependencies, such as &lt;a href=&#34;https://realpython.com/what-is-pip/&#34; target=&#34;_blank&#34;&gt;pip&lt;/a&gt; and &lt;a href=&#34;https://docs.python-guide.org/dev/virtualenvs/&#34; target=&#34;_blank&#34;&gt;virtualenv&lt;/a&gt;. These tools allow for one to easily get up and running according to some specification of what needs to be installed to proceed with running some code.&lt;/p&gt;
+
+&lt;p&gt;For example, say you have just come across the &lt;a href=&#34;https://scikit-learn.org&#34; target=&#34;_blank&#34;&gt;scikit-learn&lt;/a&gt; library (and it&amp;#8217;s love at first sight, of course). You are particularly drawn to one of its demo examples, but would like to re-produce it with the data housed in a &lt;a href=&#34;https://pandas.pydata.org/&#34; target=&#34;_blank&#34;&gt;pandas&lt;/a&gt; DataFrame. Furthermore, another project you are working on requires an ancient version of pandas, but you would like to use features available only in a newer version. With pip and virtualenv, you have nothing to fear (&amp;#8230;but fear itself).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# create and activate environment
+virtualenv pandas_like_ml
+source pandas_like_ml/bin/activate
+
+# install your desired libraries
+pip install --upgrade pip
+pip install scikit-learn==0.21.1
+pip install pandas==0.19.1
+
+# the main event
+python eigenfaces.py -n 20000
+
+# we&#39;re done here, so exit the environment
+source deactivate
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you learn this flow for the first time, you feel freed from the hellish existence that is dependency management. You triumphantly declare that you shall never, ever be conquered again by the wrath of a missing package or a bloated monolithic system environment. However, this unfortunately isn&amp;#8217;t always enough&amp;#8230;&lt;/p&gt;
+
+&lt;blockquote class=&#34;wp-block-quote is-style-large&#34;&gt;
+  &lt;p&gt;
+    Python environment tools fall short when the dependency is not at the language level, but at the system level.
+  &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For example, say you would like to set up your machine learning project with a &lt;a href=&#34;https://www.mongodb.com/&#34; target=&#34;_blank&#34;&gt;MongoDB&lt;/a&gt; database backend. No problem! &lt;code&gt;pip install pymongo&lt;/code&gt; and then we&amp;#8217;re home free! Not so fast&amp;#8230;&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-1024x329.png&#34; alt=&#34;&#34; class=&#34;wp-image-92&#34; srcset=&#34;https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-1024x329.png 1024w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-300x96.png 300w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-768x247.png 768w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-850x273.png 850w&#34; sizes=&#34;(max-width: 1024px) 100vw, 1024px&#34; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Well&amp;#8230;that didn&amp;#8217;t go as expected. Now, in addition to setting up my library dependencies, we need to also manage a library outside of python? Gah! Further delays! Time to google for the package name for mongoDB&amp;#8230;&lt;/p&gt;
+
+&lt;p&gt;What if I don&amp;#8217;t even know what operating system my colleague is using? I can&amp;#8217;t give him some &lt;code&gt;sudo apt-get install&lt;/code&gt; snippet if he&amp;#8217;s on CentOS. Even more to the point, there&amp;#8217;s no easy way to &lt;em&gt;automate&lt;/em&gt; this step for future projects. Make me do something once, I&amp;#8217;ll do it. Make me do it again&amp;#8230;zzzz.&lt;/p&gt;
+
+&lt;p&gt;So, we&amp;#8217;re faced with the desire to standardize and automate setting up software libraries and other system dependencies for new data-related endeavors, and sadly our usual python tools have fallen short. Enter Docker: an &lt;a href=&#34;https://docs.docker.com/engine/docker-overview/&#34; target=&#34;_blank&#34;&gt;engine&lt;/a&gt; for running services on an OS as lightweight virtualization packages called &lt;em&gt;containers&lt;/em&gt;. Docker containers are the realization of the definition of a Docker &lt;em&gt;image&lt;/em&gt;, which is specified by a file called a &lt;code&gt;Dockerfile&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# you can specify a base image as a foundation to build on
+FROM ubuntu:16.04
+
+# make a partition, and specify the working directory
+VOLUME /opt
+WORKDIR /opt
+
+# install some base system packages
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \
+    python3 \
+    python3-dev \
+    python3-pip \
+    python3-setuptools
+
+# install some python packages
+RUN pip3 install --upgrade pip
+RUN pip3 install \
+    scikit-learn==0.21.1 \
+    pandas==0.19.1
+
+# set the container&#39;s entry point, just a bash shell for now.
+# this can also be a single program to run, i.e. a python script.
+ENTRYPOINT [&amp;quot;/bin/bash&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Think of a Dockerfile as a (detailed) recipe of setup steps we would need to do in order to get the system in the state we would like for the experiment. Examples include things like setting up a database, installing libraries, and initializing a directory structure. If you&amp;#8217;ve ever made a nice shell script to do some setup like this for you, you were not far from the typical Docker workflow. There are many benefits that Docker has over a shell script for this, most notably being &lt;em&gt;containerization&lt;/em&gt;: with Docker containers, we are abstracted away from the host system that the container is running on. The virtual system that the container is running in is defined in its own process. Because of this, we can have multiple containers running completely different setups, but on the same host machine. How&amp;#8217;s that for some insulation against system dependency hell?&lt;/p&gt;
+
+&lt;p&gt;Additionally, we are further insulated from issues like missing files and differences of system state. We know &lt;em&gt;exactly&lt;/em&gt; what the system state will be when it is run. We know this because we have made it so via the explicit instructions in the Dockerfile.&lt;/p&gt;
+
+&lt;p&gt;To actually build the image, we use a command like the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker build \
+    -t my_first_container \
+    -f Dockerfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;At this point, we have built the image. With this image, we can repeatedly instantiate it as desired, e.g. to perform multiple experiments.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker run \
+    --rm \
+    -it \
+    my_first_container
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Voila!&lt;/p&gt;
+
+&lt;p&gt;If we left at this point and ran in N directions to do various different experiments, these commands may get rather cumbersome to type&amp;#8230;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker run \
+    --mount type=bind,source=&amp;quot;$(pwd)&amp;quot;,target=/opt \
+    --mount type=bind,source=${CORPORA_DIR},target=/corpora \
+    -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
+    -ti \
+    --rm \
+    my_advanced_container \
+    jupyter-lab \
+        --allow-root \
+        --ip=0.0.0.0 \
+        --port=${JUPYTER_PORT} \
+        --no-browser \
+        2&amp;gt;&amp;amp;1 | tee log.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Don&amp;#8217;t worry if your eyes gloss over at this. The point is it&amp;#8217;s a lot to keep typing. That&amp;#8217;s fine though, we have shell scripts for a reason. With shell scripts, we can encapsulate minute details of making a very specific sequence of commands into something as mindless as &lt;code&gt;bash doit.sh&lt;/code&gt;. However, consider also a scenario in which your Dockerfile definition depends on other files (i.e. a requirements.txt file or a file of environment variables to use). In this case, we also would like to know &lt;em&gt;automatically&lt;/em&gt; when the Docker image needs to be re-created, based on upstream &lt;em&gt;dependencies&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;So what has four letters, saves you from typing long, arduous commands, and automates dependency management?&lt;/p&gt;
+
+&lt;h2 id=&#34;make&#34;&gt;Make&lt;/h2&gt;
+
+&lt;p&gt;GNU Make is a wonderous tool, gifted to us by the same software movement that has made the digital world what it is today. I&amp;#8217;ll save you a more sparkly introduction and jump into the core abstraction of what it is: a &lt;a href=&#34;https://en.wikipedia.org/wiki/Directed_acyclic_graph&#34; target=&#34;_blank&#34;&gt;DAG&lt;/a&gt;-based approach to intelligently managing dependencies of actions in a process, in order to &lt;em&gt;efficiently&lt;/em&gt; achieve a desired outcome.&lt;/p&gt;
+
+&lt;p&gt;Ok, it&amp;#8217;s also a convenient way to compile C code. But focus on the first definition, and think bigger! Re-using the general DAG-based dependency management idea has led to some great tools over the years, like &lt;a href=&#34;https://github.com/Factual/drake&#34; target=&#34;_blank&#34;&gt;Drake&lt;/a&gt; (not the rapper), &lt;a href=&#34;https://github.com/spotify/luigi&#34; target=&#34;_blank&#34;&gt;Luigi&lt;/a&gt; (not Mario&amp;#8217;s brother), and perhaps most notably &lt;a href=&#34;https://airflow.apache.org/&#34; target=&#34;_blank&#34;&gt;Airflow&lt;/a&gt; (AirBnB&amp;#8217;s baby, but now part of the Apache Foundation).&lt;/p&gt;
+
+&lt;p&gt;Consider the contrived example below. We&amp;#8217;d like to make predictions on audio-visual data with a trained model. As a new raw image appears, do we need to re-train the model in order to create a prediction? Setting aside applications such as online learning, we do not. Similarly, say we just updated some parameters of our trained model. Do we need to re-cull the raw images, in order to re-create the &lt;em&gt;same data sample&lt;/em&gt;? Nope.&lt;/p&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1.png&#34; alt=&#34;&#34; class=&#34;wp-image-102&#34; srcset=&#34;https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1.png 448w, https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1-300x297.png 300w&#34; sizes=&#34;(max-width: 448px) 100vw, 448px&#34; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This is where Make comes into play. By specifying a &lt;a href=&#34;http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/&#34; target=&#34;_blank&#34;&gt;Makefile&lt;/a&gt; with &amp;#8220;targets&amp;#8221; that correspond to (one or more) desired outputs in the DAG, invoking that target will automatically provide that outcome for you, while only re-invoking dependency processes that are necessary.&lt;/p&gt;
+
+&lt;p&gt;Make can be used for pretty much anything that involves actions and their dependencies. It&amp;#8217;s not always right tool in the shed (see &lt;a href=&#34;https://airflow.apache.org/&#34; target=&#34;_blank&#34;&gt;Airflow&lt;/a&gt; for this process on distributed applications), but it can get you pretty far. I even used it to generate the image above! Here&amp;#8217;s what the Makefile looks like.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# the &amp;quot;graph.png&amp;quot; target specifies &amp;quot;graph.dot&amp;quot; as a dependency
+# when &amp;quot;graph.png&amp;quot; is invoked, it invokes &amp;quot;graph.dot&amp;quot; only if necessary
+
+graph.png: graph.dot
+    dot graph.dot -Tpng &amp;gt; graph.png
+
+# the &amp;quot;graph.dot&amp;quot; target specifies &amp;quot;make_graph.py&amp;quot; as a dependency
+# so, this command is only re-run when...
+#   1) make_graph.py changes
+#   2) graph.dot is not present
+graph.dot: make_graph.py
+    python make_graph.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;marrying-the-two&#34;&gt;Marrying the Two&lt;/h2&gt;
+
+&lt;p&gt;So we&amp;#8217;ve ailed over to struggles of reproducible work and introduced great tools to manage environment encapsulation (Docker) and dependency management (Make). These are two pretty cool cats, we should introduce them to each other!&lt;figure class=&#34;wp-block-image&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-1024x683.jpg&#34; alt=&#34;&#34; class=&#34;wp-image-116&#34; srcset=&#34;https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-1024x683.jpg 1024w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-300x200.jpg 300w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-768x512.jpg 768w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-850x567.jpg 850w&#34; sizes=&#34;(max-width: 1024px) 100vw, 1024px&#34; /&gt;&lt;figcaption&gt;Photo by&amp;nbsp;&lt;a href=&#34;https://unsplash.com/@productschool?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34; target=&#34;_blank&#34;&gt;Product School&lt;/a&gt;&amp;nbsp;on&amp;nbsp;&lt;a href=&#34;https://unsplash.com/search/photos/meet?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34; target=&#34;_blank&#34;&gt;Unsplash&lt;/a&gt;&lt;br /&gt;
+P.S. Which one is Docker, and which is Make?&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#8217;s say we&amp;#8217;ve just found the &lt;a href=&#34;https://magenta.tensorflow.org/&#34; target=&#34;_blank&#34;&gt;Magenta&lt;/a&gt; project, and would like to set up an environment to consistently run demos and experiments in, without further regard to what version of &lt;code&gt;this_or_that.py&lt;/code&gt; is running on someone&amp;#8217;s computer. After all, on some level, we don&amp;#8217;t care what version of &lt;code&gt;this_or_that.py&lt;/code&gt; is running on your machine. What we care is that you are able to experience the same demo/result that the sender has experienced, with minimal effort.&lt;/p&gt;
+
+&lt;p&gt;So, let&amp;#8217;s set up a basic &lt;code&gt;Dockerfile&lt;/code&gt; definition that can accomplish this. Thankfully, the Magenta folks have done the due diligence of creating a &lt;a href=&#34;https://hub.docker.com/r/tensorflow/magenta/tags&#34; target=&#34;_blank&#34;&gt;base Docker image&lt;/a&gt; themselves, to make it &lt;em&gt;trivial&lt;/em&gt; to build from:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# base image
+FROM tensorflow/magenta
+
+# set partition and working directory
+VOLUME /opt
+WORKDIR /opt
+
+# install base system packages
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \
+    vim \
+    portaudio19-dev
+
+# install python libraries
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r /tmp/requirements.txt
+
+# container entry point
+ENTRYPOINT [&amp;quot;/bin/bash&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After specifying the base image as Magenta&amp;#8217;s, we set a working directory on an &lt;code&gt;/opt&lt;/code&gt; volume, install some system-level and python-level dependencies, and make a simple &lt;code&gt;bash&lt;/code&gt; entry point until we have a working application. A typical &lt;code&gt;requirements.txt&lt;/code&gt; file might look like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;jupyterlab
+seaborn
+scikit-learn
+matplotlib
+pyaudio
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Awesome. So now we have a specification of our desired environment. We can now make a &lt;code&gt;Makefile&lt;/code&gt; which handles some of the dependencies at play:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# use the name of the current directory as the docker image tag
+DOCKERFILE ?= Dockerfile
+DOCKER_TAG ?= $(shell echo ${PWD} | rev | cut -d/ -f1 | rev)
+DOCKER_IMAGE = ${DOCKER_USERNAME}/${DOCKER_REPO}:${DOCKER_TAG}
+
+$(DOCKERFILE): requirements.txt
+    docker build \
+        -t ${DOCKER_IMAGE} \
+        -f ${DOCKERFILE} \
+        .
+
+.PHONY image
+image: $(DOCKERFILE)
+
+.PHONY: run
+run:
+     nvidia-docker run \
+         --mount type=bind,source=&amp;quot;$(shell pwd)&amp;quot;,target=/opt \
+         -i \
+         --rm \
+         -t $(DOCKER_IMAGE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This &lt;code&gt;Makefile&lt;/code&gt; specifies targets for &lt;code&gt;run&lt;/code&gt;, &lt;code&gt;image&lt;/code&gt;, and &lt;code&gt;$(DOCKERFILE)&lt;/code&gt;. The &lt;code&gt;$(DOCKERFILE)&lt;/code&gt; target lists &lt;code&gt;requirements.txt&lt;/code&gt; as a dependency, and thus will trigger a re-build of the Docker image when that file changes. The &lt;code&gt;image&lt;/code&gt; target is a simple alias for the &lt;code&gt;$(DOCKERFILE)&lt;/code&gt; target. Finally, the &lt;code&gt;run&lt;/code&gt; target allows a concise call to execute the desired program in the Docker container, as opposed to typing out the laborious command each time.&lt;/p&gt;
+
+&lt;h2 id=&#34;one-docker-to-rule-them-all&#34;&gt;One Docker to Rule Them All?&lt;/h2&gt;
+
+&lt;div class=&#34;wp-block-image&#34;&gt;
+  &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker.jpg&#34; alt=&#34;&#34; class=&#34;wp-image-111&#34; srcset=&#34;https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker.jpg 400w, https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker-300x225.jpg 300w&#34; sizes=&#34;(max-width: 400px) 100vw, 400px&#34; /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;At this point, you may be motivated to go off and define every possible dependency in a &lt;code&gt;Dockerfile&lt;/code&gt;, in order to never again be plagued with the troubles of ensuring an appropriate environment for your next project. For example, Floydhub has an &lt;a href=&#34;https://github.com/floydhub/dl-docker&#34; target=&#34;_blank&#34;&gt;all-in-one Docker image&lt;/a&gt; for deep learning projects. This image specification includes &lt;em&gt;numerous&lt;/em&gt; deep learning frameworks and supporting python libraries.&lt;/p&gt;
+
+&lt;p&gt;Don&amp;#8217;t do that!&lt;/p&gt;
+
+&lt;p&gt;For the sake of argument, let&amp;#8217;s take that to the limit. After the next 100 projects that you work on, what will your Docker image look like? And what about after the next 1000 projects? Over time, it will just become as bloated as if you had incrementally changed your main OS in each project. This goes against the containerization philosophy of Docker &amp;#8212; your containers should be lightweight while remaining sufficient.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, with all of that bloat you lose the ability to sustain multiple directions of projects that require different versions of dependencies. What if one of your projects requires the latest version of Tensorflow to run, but you don&amp;#8217;t want to update the 99 previous projects (and deal with all of the failures the updates bring)?&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In this part of the Towards Efficient and Reproducible (TEAR) ML Workflows series, we&amp;#8217;ve established the basis for making experiments and applications a relatively painless process. We used containerization via Docker to ensure experiments and applications are &lt;strong&gt;reproducible&lt;/strong&gt; and easy to execute. We then used some automatic dependency management via Make for keeping experiment pipelines &lt;strong&gt;efficient&lt;/strong&gt; and simple to run.&lt;figure class=&#34;wp-block-image&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-1024x689.jpg&#34; alt=&#34;&#34; class=&#34;wp-image-114&#34; srcset=&#34;https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-1024x689.jpg 1024w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-300x202.jpg 300w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-768x517.jpg 768w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-850x572.jpg 850w&#34; sizes=&#34;(max-width: 1024px) 100vw, 1024px&#34; /&gt;&lt;figcaption&gt;Photo by&amp;nbsp;&lt;a href=&#34;https://unsplash.com/@shs521?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34; target=&#34;_blank&#34;&gt;Susan Holt Simpson&lt;/a&gt;&amp;nbsp;on&amp;nbsp;&lt;a href=&#34;https://unsplash.com/collections/4885214/blog-photos?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34; target=&#34;_blank&#34;&gt;Unsplash&lt;/a&gt;&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;It&amp;#8217;s worth noting that there are numerous alternative solutions to these two; however, they follow the same general &lt;em&gt;patterns&lt;/em&gt;: containerization gives you reproducibility and automatic dependency management gives you efficiency. From there, the value added in other solutions usually comes down to bells and whistles like cloud integration, scalability, or general ease of use. To each, your own choice of tools.&lt;/p&gt;
+
+&lt;p&gt;Next, we’ll look at giving some more power to each of these processes, saving us more time and making them more reusable. We’ll also look at some best practices on how to properly collaborate with others when building these processes.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The War on Attention</title>
+      <link>https://anthonyagnone.com/post/the-war-on-attention/</link>
+      <pubDate>Fri, 15 Feb 2019 19:01:29 +0000</pubDate>
+      <guid>https://anthonyagnone.com/post/the-war-on-attention/</guid>
+      <description>
+
+&lt;p&gt;I like &lt;a rel=&#34;noreferrer noopener&#34; aria-label=&#34; (opens in a new tab)&#34; href=&#34;https://en.wikipedia.org/wiki/Information&#34; target=&#34;_blank&#34;&gt;information&lt;/a&gt;. After all, it&amp;#8217;s the removal of uncertainty from our minds. And boy, do &lt;a href=&#34;https://www.theguardian.com/commentisfree/2016/apr/04/uncertainty-stressful-research-neuroscience&#34; target=&#34;_blank&#34;&gt;we hate uncertainty&lt;/a&gt;. We just want to know it!&lt;/p&gt;
+
+&lt;p&gt;It&amp;#8230;? What is &lt;em&gt;it&lt;/em&gt;? It is anything&amp;#8230;and it is everything. No partially this or partially that. We just want to know, one way or the other.&lt;/p&gt;
+
+&lt;p&gt;We are now creating more information each second than it had taken thousands (and billions, depending on who &amp;#8220;we&amp;#8221; refers to) of years to previously create [&lt;a href=&#34;https://en.wikipedia.org/wiki/Information_Age&#34; target=&#34;_blank&#34; rel=&#34;noreferrer noopener&#34; aria-label=&#34; (opens in a new tab)&#34;&gt;1&lt;/a&gt;][&lt;a rel=&#34;noreferrer noopener&#34; aria-label=&#34; (opens in a new tab)&#34; href=&#34;https://www.forbes.com/sites/bernardmarr/2018/05/21/how-much-data-do-we-create-every-day-the-mind-blowing-stats-everyone-should-read/#10b5066560ba&#34; target=&#34;_blank&#34;&gt;2&lt;/a&gt;].&lt;/p&gt;
+
+&lt;p&gt;But damn&amp;#8230;isn&amp;#8217;t it just plain &lt;a rel=&#34;noreferrer noopener&#34; aria-label=&#34; (opens in a new tab)&#34; href=&#34;https://en.wikipedia.org/wiki/Information_overload&#34; target=&#34;_blank&#34;&gt;hard&lt;/a&gt; nowadays to manage it all?&lt;/p&gt;
+
+&lt;p&gt;A lot of you will have already clicked on the various links in the previous sentences, and maybe even made sure to open them in a new browser tab, so as to not take you away from this page. That implies you love organizing information too. But how do we &lt;em&gt;manage&lt;/em&gt; all of that information in an age where it is exponentially more prevalent than we’ve ever had to deal with before? This prevalence is both a gift and a curse.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-gift&#34;&gt;A Gift&lt;/h2&gt;
+
+&lt;p&gt;It&amp;#8217;s a gift because we now are able to resolve uncertainty at unprecedented levels. A world of information is literally at our fingertips, with the relatively negligible (all things considered, at least) weight of a computer or mobile phone. On any given day, you can decide to learn about almost any subject, and likely also do so without much, if any, financial loss. This kind of luxury was only a pipe dream for previous generations, where obtaining a new skill likely meant massive financial commitments, re-location, and lugging around several pounds worth of textbooks. For what it&amp;#8217;s worth, universities aren&amp;#8217;t completely unlike this today; they are, however, similar to a much smaller extent.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-curse&#34;&gt;A Curse&lt;/h2&gt;
+
+&lt;p&gt;But slow down for a moment. There are also some severe negatives to these rapid changes in the world. This unprecedented level of inbound information flow has also led to unprecedented amounts of stress on our brains, due to all the uncertainty introduced. The universe is a closed system, with finite resources to drive change in the form of evolution. However, it&amp;#8217;s plausible to say that our technological progress has (at least, to date) been advancing far more rapidly than, our biological selves can.&lt;/p&gt;
+
+&lt;p&gt;Take a moment to close your eyes. Think about the last time you were in a place completely removed from anything digital. Maybe it was a walk on the beach during a beautiful orange sunset. Maybe it was a cool, morning hike on your favorite mountain trail with your best friend. Bask in the memory of how quiet, peaceful, and equal-tempered your surroundings were.&lt;/p&gt;
+
+&lt;p&gt;Now&amp;#8230;let your attention rush back into the present, and you&amp;#8217;ve likely found that countless things have already sucked you back in. Televisions, phones, computer displays, car horns, billboards, etc.&lt;/p&gt;
+
+&lt;p&gt;These things pack a ton of information in them, and a lot of them do so very explicitly. But this information doesn&amp;#8217;t just resolve uncertainty; it also &lt;em&gt;creates&amp;nbsp;more&lt;/em&gt;, and often more than it had resolved in the first place. Take, for example, checking your phone. You hit a wake button and your are flooded with work emails, pictures from your friends, questions from your parents, voicemails from recruiters, voicemails from spam, attempted fraud on your bank account, etc. Through this information, you&amp;#8217;ve just resolved the uncertainties of whether those events have occurred or not. However, they&amp;#8217;ve also seized your attention for the foreseeable minutes of your life to resolve the additional uncertainties they have created. Obviously, some of these notifications are leaps and bounds more useful than others (protecting your bank account vs. laughing at a meme). However, we need to learn as humans and as societies of humans how to more effectively manage this explosion of information to retain our sanity.&lt;/p&gt;
+
+&lt;p&gt;There&amp;#8217;s another factor of information overload at play here: others profiting from controlling your attention. With the spread of free knowledge and software, a leading way to profit in platforms such as mobile apps and news media is advertising. This strategy provides information to you for free, but profits from allowing other entities to come along for the right and try to whisk you away with a quick &amp;#8220;Hey, look at me! Click on me! Make me money.&amp;#8221; These methods even are designed to &lt;em&gt;optimally take and keep your attention&lt;/em&gt;, since it&amp;#8217;s how the success of the designers&amp;#8217; methods is measured.&lt;/p&gt;
+
+&lt;p&gt;Think about that: someone else prospers when they can keep you focusing on what &lt;em&gt;they&lt;/em&gt; want you to be focusing on, even if it causes record-breaking amounts of stress for you. Granted, they likely aren&amp;#8217;t viewing it like that; they&amp;#8217;re just trying to make money to help their own efforts and to get by in life. However, if you allow the thousands of designed attention-grabbers to jerk your focus one way or another constantly, you end up just a spiraling pawn in their attention game.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-good-fight&#34;&gt;The Good Fight&lt;/h2&gt;
+
+&lt;p&gt;Now, we&amp;#8217;re fighting to take control back. We feel a little less human when we find ourselves being tugged back and forth between a focus on this and that. We&amp;#8217;re talk about attention as an ever-more &lt;a href=&#34;https://en.wikipedia.org/wiki/Attention_economy&#34; target=&#34;_blank&#34;&gt;scarce&amp;nbsp;resource&lt;/a&gt;. We&amp;#8217;re framing all this digital information as being sometimes too much to efficiently process, and therefore something that we need to &lt;a href=&#34;https://en.wikipedia.org/wiki/Digital_detox&#34; target=&#34;_blank&#34;&gt;detox&lt;/a&gt; from. But who is to blame for all of this? The designers and marketers? The politicians? The laws of physics? Ourselves?&lt;/p&gt;
+
+&lt;h2 id=&#34;perspective&#34;&gt;Perspective&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;m not interested in blame in this setting. I&amp;#8217;m interested in taking control where I can, and re-achieving the daily sense of calm I used to easily have before the whirlwind of digital information reached me. One control we will hopefully always have is &lt;em&gt;what we choose to allow to reach our senses&lt;/em&gt;, and therefore divert our attention. I&amp;#8217;m not going to blow this article up into a to-do list for iPhone notification settings. What I will way though, is that you have a lot of capability to reduce the distracting signals in your everyday environment, whether it&amp;#8217;s software settings, work environment setup, or home-life setup. What I think you&amp;#8217;ll find is that the more you chip away at things like constant notifications, sounds, and attention shifts, the more you&amp;#8217;ll get back in touch with that endorphin-inducing sense of focus and serenity that leads to a happier and more meaningful day.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;m interested in anybody&amp;#8217;s time-proven methods for achieving this goals. Please share!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
