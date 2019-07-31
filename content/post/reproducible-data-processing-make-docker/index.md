@@ -26,7 +26,8 @@ tags:
 ---
 ## Motivation
 
-When performing experiments in data science and machine learning, two main blockers of initial progress are delays building/using &#8220;base code&#8221; and lack of reproducibility. Thanks to some great open source tools, you don&#8217;t have to be a software guru to circumvent these obstacles and get meaning from your data in a much smoother process.
+When performing experiments in data science and machine learning, two main blockers of initial progress are delays building/using &#8220;base code&#8221; and lack of reproducibility.
+Thanks to some great open source tools, you don&#8217;t have to be a software guru to circumvent these obstacles and get meaning from your data in a much smoother process.
 
 <p class="has-medium-font-size">
   &#8220;Hey there, I got this error when I ran your code&#8230;can you help me?&#8221;

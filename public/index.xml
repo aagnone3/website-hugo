@@ -60,8 +60,19 @@
 &lt;p&gt;So, what algorithms are at our disposal for traversing through a network of nodes in different ways? Of course, breadth-first search (BFS) and depth-first search (DFS) quickly come to mind. For the curious, have a look at the basic logic flow of it below. Besides a set membership guard, new homes are only added to the collection when they satisfy the constraints asserted in the &lt;code&gt;meets_criteria&lt;/code&gt; function. For now, I do a simple L2 distance check between a pre-defined root lat/long location and the current home’s location. This criterion encouraged the search to stay local to the root, for the purposes of a well-connected and granular heat map. The implementation below uses DFS by popping off the end of the list (line 5) and adding to the end of the list (14), but BFS can be quickly achieved by changing either line (but not both) to instead use the front of the list.&lt;/p&gt;
 
 &lt;p&gt;Letting this algorithm run for 10,000 iterations on Atlanta homes produces the following map in just a few minutes!
-What’s more, the &lt;a href=&#34;https://anthonyagnone.com/files/atlanta_heatmap.html&#34; target=&#34;_blank&#34;&gt;generated webpage&lt;/a&gt; from folium is interactive, allowing common map navigation tools like zooming and panning.
-To prove out its modularity, I generated some smaller-scale maps of prices for &lt;a href=&#34;https://anthonyagnone.com/files/boston_heatmap.html&#34; target=&#34;_blank&#34;&gt;Boston, MA&lt;/a&gt; and &lt;a href=&#34;https://anthonyagnone.com/files/seattle_heatmap.html&#34; target=&#34;_blank&#34;&gt;Seattle, WA&lt;/a&gt; as well.&lt;/p&gt;
+What’s more, the
+&lt;a href=&#34;https://anthonyagnone.com/files/atlanta_heatmap.html&#34; target=&#34;_blank&#34;&gt;
+generated webpage
+&lt;/a&gt;
+from folium is interactive, allowing common map navigation tools like zooming and panning.
+To prove out its modularity, I generated some smaller-scale maps of prices for
+&lt;a href=&#34;https://anthonyagnone.com/files/boston_heatmap.html&#34; target=&#34;_blank&#34;&gt;
+Boston, MA
+&lt;/a&gt; and
+&lt;a href=&#34;https://anthonyagnone.com/files/seattle_heatmap.html&#34; target=&#34;_blank&#34;&gt;
+Seattle, WA
+&lt;/a&gt;
+as well.&lt;/p&gt;
 
 &lt;div class=&#34;wp-block-image&#34;&gt;
   &lt;figure class=&#34;aligncenter&#34;&gt;&lt;img src=&#34;https://cdn-images-1.medium.com/max/800/1*Q81SBWiXe77l8xq8oqpgyw.png&#34; alt=&#34;&#34; /&gt;&lt;figcaption&gt;Heat map of Atlanta housing prices. See the interactive version &lt;a href=&#34;https://anthonyagnone.com/files/atlanta_heatmap.html&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.
@@ -92,7 +103,8 @@ Either way, the &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://github
 
 &lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
 
-&lt;p&gt;When performing experiments in data science and machine learning, two main blockers of initial progress are delays building/using &amp;#8220;base code&amp;#8221; and lack of reproducibility. Thanks to some great open source tools, you don&amp;#8217;t have to be a software guru to circumvent these obstacles and get meaning from your data in a much smoother process.&lt;/p&gt;
+&lt;p&gt;When performing experiments in data science and machine learning, two main blockers of initial progress are delays building/using &amp;#8220;base code&amp;#8221; and lack of reproducibility.
+Thanks to some great open source tools, you don&amp;#8217;t have to be a software guru to circumvent these obstacles and get meaning from your data in a much smoother process.&lt;/p&gt;
 
 &lt;p class=&#34;has-medium-font-size&#34;&gt;
   &amp;#8220;Hey there, I got this error when I ran your code&amp;#8230;can you help me?&amp;#8221;

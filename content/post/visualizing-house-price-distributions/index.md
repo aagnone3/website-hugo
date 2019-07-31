@@ -64,8 +64,19 @@ Returning to the chosen path, I mentioned that I used initial results as entry p
 So, what algorithms are at our disposal for traversing through a network of nodes in different ways? Of course, breadth-first search (BFS) and depth-first search (DFS) quickly come to mind. For the curious, have a look at the basic logic flow of it below. Besides a set membership guard, new homes are only added to the collection when they satisfy the constraints asserted in the `meets_criteria` function. For now, I do a simple L2 distance check between a pre-defined root lat/long location and the current home’s location. This criterion encouraged the search to stay local to the root, for the purposes of a well-connected and granular heat map. The implementation below uses DFS by popping off the end of the list (line 5) and adding to the end of the list (14), but BFS can be quickly achieved by changing either line (but not both) to instead use the front of the list.
 
 Letting this algorithm run for 10,000 iterations on Atlanta homes produces the following map in just a few minutes!
-What’s more, the {{% staticref "files/atlanta_heatmap.html" "newtab" %}}generated webpage{{% /staticref %}} from folium is interactive, allowing common map navigation tools like zooming and panning.
-To prove out its modularity, I generated some smaller-scale maps of prices for {{% staticref "files/boston_heatmap.html" "newtab" %}}Boston, MA{{% /staticref %}} and {{% staticref "files/seattle_heatmap.html" "newtab" %}}Seattle, WA{{% /staticref %}} as well.
+What’s more, the
+{{% staticref "files/atlanta_heatmap.html" "newtab" %}}
+generated webpage
+{{% /staticref %}}
+from folium is interactive, allowing common map navigation tools like zooming and panning.
+To prove out its modularity, I generated some smaller-scale maps of prices for 
+{{% staticref "files/boston_heatmap.html" "newtab" %}}
+Boston, MA
+{{% /staticref %}} and 
+{{% staticref "files/seattle_heatmap.html" "newtab" %}}
+Seattle, WA
+{{% /staticref %}} 
+as well.
 
 <div class="wp-block-image">
   <figure class="aligncenter"><img src="https://cdn-images-1.medium.com/max/800/1*Q81SBWiXe77l8xq8oqpgyw.png" alt="" /><figcaption>Heat map of Atlanta housing prices. See the interactive version {{% staticref "files/atlanta_heatmap.html" "newtab" %}}here{{% /staticref %}}.

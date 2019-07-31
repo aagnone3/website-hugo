@@ -21,7 +21,8 @@
 
 &lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
 
-&lt;p&gt;When performing experiments in data science and machine learning, two main blockers of initial progress are delays building/using &amp;#8220;base code&amp;#8221; and lack of reproducibility. Thanks to some great open source tools, you don&amp;#8217;t have to be a software guru to circumvent these obstacles and get meaning from your data in a much smoother process.&lt;/p&gt;
+&lt;p&gt;When performing experiments in data science and machine learning, two main blockers of initial progress are delays building/using &amp;#8220;base code&amp;#8221; and lack of reproducibility.
+Thanks to some great open source tools, you don&amp;#8217;t have to be a software guru to circumvent these obstacles and get meaning from your data in a much smoother process.&lt;/p&gt;
 
 &lt;p class=&#34;has-medium-font-size&#34;&gt;
   &amp;#8220;Hey there, I got this error when I ran your code&amp;#8230;can you help me?&amp;#8221;
