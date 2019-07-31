@@ -7,10 +7,18 @@ SITE_NAME ?= anthonyagnone.com
 help: ## Display help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
 
-.PHONY:
-stage: ## Transfer to staging directory on remote host
+.PHONY: clean
+clean:
+	rm -rf public
+
+.PHONY: build
+build: clean  ## Build static site
+	hugo
+
+.PHONY: stage
+stage: build ## Transfer to staging directory on remote host
 	rsync -azru . $(REMOTE_HOST):$(STAGE_DIR)/$(SITE_NAME)
 
-.PHONY:
-deploy: ## Transfer to deploy directory on remote host
+.PHONY: deploy
+deploy: build ## Transfer to deploy directory on remote host
 	rsync -azru . $(REMOTE_HOST):$(SITE_NAME)
