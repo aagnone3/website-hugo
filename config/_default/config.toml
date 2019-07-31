@@ -18,9 +18,6 @@ copyright = ""
 # Enable analytics by entering your Google Analytics tracking ID
 googleAnalytics = ""
 
-# [permalinks]
-#     post = "/blog/:slug"
-
 ############################
 ## Advanced options below ##
 ############################
@@ -41,6 +38,9 @@ paginate = 10  # Number of items per page in paginated lists.
 enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 ignoreFiles = ["\\.ipynb$", ".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
+[permalinks]
+    post = "/:slug"
 
 [outputs]
   home = [ "HTML", "RSS", "JSON", "WebAppManifest" ]

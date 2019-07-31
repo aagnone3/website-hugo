@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Anthony Agnone">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Avoiding reproducibility hell with dependency management and containerization.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://anthonyagnone.com/reproducible-data-processing-make-docker/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.3bc694af15fd1e4ff7262e7dd46f11a8.css">
+
+  
+
+  
+  
+  
+
+  
+
+  
+
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://anthonyagnone.com/reproducible-data-processing-make-docker/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@anthonyagnone">
+  <meta property="twitter:creator" content="@anthonyagnone">
+  
+  <meta property="og:site_name" content="Anthony Agnone">
+  <meta property="og:url" content="https://anthonyagnone.com/reproducible-data-processing-make-docker/">
+  <meta property="og:title" content="Reproducible Data Processing: Make &#43; Docker | Anthony Agnone">
+  <meta property="og:description" content="Avoiding reproducibility hell with dependency management and containerization."><meta property="og:image" content="https://anthonyagnone.com/reproducible-data-processing-make-docker/featured.jpg">
+  <meta property="twitter:image" content="https://anthonyagnone.com/reproducible-data-processing-make-docker/featured.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2019-07-10T18:11:01&#43;00:00">
+    
+    <meta property="article:modified_time" content="2019-07-10T18:11:01&#43;00:00">
+  
+
+  
+
+
+  
+
+
+
+
+
+  <title>Reproducible Data Processing: Make &#43; Docker | Anthony Agnone</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Anthony Agnone</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/post"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1 itemprop="name">Reproducible Data Processing: Make &#43; Docker</h1>
+
+  
+  <p class="page-subtitle">Avoiding reproducibility hell with dependency management and containerization.</p>
+  
+
+  
+
+
+
+<meta content="2019-07-10 18:11:01 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-07-10 18:11:01 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="/authors/anthonyagnone/">anthonyagnone</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Jul 10, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    12 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/data/">data</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://anthonyagnone.com/reproducible-data-processing-make-docker/&amp;text=Reproducible%20Data%20Processing:%20Make%20&#43;%c2%a0Docker" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://anthonyagnone.com/reproducible-data-processing-make-docker/&amp;t=Reproducible%20Data%20Processing:%20Make%20&#43;%c2%a0Docker" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Reproducible%20Data%20Processing:%20Make%20&#43;%c2%a0Docker&amp;body=https://anthonyagnone.com/reproducible-data-processing-make-docker/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://anthonyagnone.com/reproducible-data-processing-make-docker/&amp;title=Reproducible%20Data%20Processing:%20Make%20&#43;%c2%a0Docker" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Reproducible%20Data%20Processing:%20Make%20&#43;%c2%a0Docker%20https://anthonyagnone.com/reproducible-data-processing-make-docker/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://anthonyagnone.com/reproducible-data-processing-make-docker/&amp;title=Reproducible%20Data%20Processing:%20Make%20&#43;%c2%a0Docker" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header container featured-image-wrapper mt-4 mb-4" style="max-width: 300px; max-height: 200px;">
+  <div style="position: relative">
+    <img src="/reproducible-data-processing-make-docker/featured.jpg" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<h2 id="motivation">Motivation</h2>
+
+<p>When performing experiments in data science and machine learning, two main blockers of initial progress are delays building/using &#8220;base code&#8221; and lack of reproducibility. Thanks to some great open source tools, you don&#8217;t have to be a software guru to circumvent these obstacles and get meaning from your data in a much smoother process.</p>
+
+<p class="has-medium-font-size">
+  &#8220;Hey there, I got this error when I ran your code&#8230;can you help me?&#8221;
+</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-1024x254.png" alt="" class="wp-image-89" srcset="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-1024x254.png 1024w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-300x75.png 300w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-768x191.png 768w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-850x211.png 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>oh yeah, that file&#8230;</figcaption></figure>
+</div>
+
+<p>&#8230;and it&#8217;s something facepalm-worthy. Here you are, trying to hit the ground running with a friend or colleague on an interesting idea, and you&#8217;re now side-tracked debugging a file-not-found error. Welcome back to your intro programming course!</p>
+
+<p>I&#8217;m sure the owner of the code also loves nothing more than to spend a bunch of time helping someone step through these issues at a snail&#8217;s pace. The sheer euphoria you two have just shared over the promise of recent experimental results has now morphed into unspoken embarrassment and frustration that the demonstration has failed before showing any worth, whatsoever.</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/07/over.jpg" alt="" class="wp-image-121" srcset="https://anthonyagnone.com/wp-content/uploads/2019/07/over.jpg 621w, https://anthonyagnone.com/wp-content/uploads/2019/07/over-300x194.jpg 300w" sizes="(max-width: 621px) 100vw, 621px" /></figure>
+</div>
+
+<p>But it&#8217;s fine. It&#8217;s fine! Your buddy knows just where to find that missing file. You&#8217;re told that you will have it within minutes, and then you will be on your way!</p>
+
+<p class="has-medium-font-size">
+  &#8220;Alright, download that file &#8212; I just emailed it to you. Then run train.py, you should get 98% accuracy in 20 epochs.&#8221;
+</p>
+
+<p>Aha! This is it! The time has come to join the ranks of esteemed data magicians, casting one keyboard spell after another, watching your data baby&#8217;s brain get progressively more advanced as it beckons for a role in a new Terminator movie! Let&#8217;s see what we get!</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM.png" alt="" class="wp-image-90" srcset="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM.png 474w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM-300x128.png 300w" sizes="(max-width: 474px) 100vw, 474px" /><figcaption>but I did what you said 🙁</figcaption></figure>
+</div>
+
+<p>&#8230;yeah, we&#8217;ve all been there.</p>
+
+<p>What could it be? Well, maybe it&#8217;s something obvious. I know python, and I know what your code should be doing. I&#8217;ll just pop open your <code>train.py</code> to poke around and&#8230;NOPE.</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter"><img src="https://i.chzbgr.com/full/6157943808/h9C44E570/" alt="" /></figure>
+</div>
+
+<p>Don&#8217;t worry, this isn&#8217;t going to be a pinky-waving article about how to always write a software masterpiece and scoff at anything you deem insubordinate. That&#8217;s a sticky subject in general, as it&#8217;s wrought with subjectivity and competing standards. These examples aim to just emphasize how there are a myriad of ways in which we would <span style="text-decoration: underline;">not</span> prefer for new experiments to start.</p>
+
+<p>We&#8217;re interested in <em>re-producing</em> and <em>improving</em> on results in a <em>convenient</em> fashion, not stumbling to re-create past achievements. With that in mind, let&#8217;s have a look at some popular tools that can be used to streamline the start of any new ML software project: <a href="https://www.docker.com/" target="_blank">Docker</a> and <a href="https://www.gnu.org/software/make/" target="_blank">Make</a>.</p>
+
+<h2 id="docker">Docker</h2>
+
+<p>The python ecosystem has some great features for dealing with dependencies, such as <a href="https://realpython.com/what-is-pip/" target="_blank">pip</a> and <a href="https://docs.python-guide.org/dev/virtualenvs/" target="_blank">virtualenv</a>. These tools allow for one to easily get up and running according to some specification of what needs to be installed to proceed with running some code.</p>
+
+<p>For example, say you have just come across the <a href="https://scikit-learn.org" target="_blank">scikit-learn</a> library (and it&#8217;s love at first sight, of course). You are particularly drawn to one of its demo examples, but would like to re-produce it with the data housed in a <a href="https://pandas.pydata.org/" target="_blank">pandas</a> DataFrame. Furthermore, another project you are working on requires an ancient version of pandas, but you would like to use features available only in a newer version. With pip and virtualenv, you have nothing to fear (&#8230;but fear itself).</p>
+
+<pre><code class="language-bash"># create and activate environment
+virtualenv pandas_like_ml
+source pandas_like_ml/bin/activate
+
+# install your desired libraries
+pip install --upgrade pip
+pip install scikit-learn==0.21.1
+pip install pandas==0.19.1
+
+# the main event
+python eigenfaces.py -n 20000
+
+# we're done here, so exit the environment
+source deactivate
+</code></pre>
+
+<p>When you learn this flow for the first time, you feel freed from the hellish existence that is dependency management. You triumphantly declare that you shall never, ever be conquered again by the wrath of a missing package or a bloated monolithic system environment. However, this unfortunately isn&#8217;t always enough&#8230;</p>
+
+<blockquote class="wp-block-quote is-style-large">
+  <p>
+    Python environment tools fall short when the dependency is not at the language level, but at the system level.
+  </p>
+</blockquote>
+
+<p>For example, say you would like to set up your machine learning project with a <a href="https://www.mongodb.com/" target="_blank">MongoDB</a> database backend. No problem! <code>pip install pymongo</code> and then we&#8217;re home free! Not so fast&#8230;</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-1024x329.png" alt="" class="wp-image-92" srcset="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-1024x329.png 1024w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-300x96.png 300w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-768x247.png 768w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-850x273.png 850w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+</div>
+
+<p>Well&#8230;that didn&#8217;t go as expected. Now, in addition to setting up my library dependencies, we need to also manage a library outside of python? Gah! Further delays! Time to google for the package name for mongoDB&#8230;</p>
+
+<p>What if I don&#8217;t even know what operating system my colleague is using? I can&#8217;t give him some <code>sudo apt-get install</code> snippet if he&#8217;s on CentOS. Even more to the point, there&#8217;s no easy way to <em>automate</em> this step for future projects. Make me do something once, I&#8217;ll do it. Make me do it again&#8230;zzzz.</p>
+
+<p>So, we&#8217;re faced with the desire to standardize and automate setting up software libraries and other system dependencies for new data-related endeavors, and sadly our usual python tools have fallen short. Enter Docker: an <a href="https://docs.docker.com/engine/docker-overview/" target="_blank">engine</a> for running services on an OS as lightweight virtualization packages called <em>containers</em>. Docker containers are the realization of the definition of a Docker <em>image</em>, which is specified by a file called a <code>Dockerfile</code>.</p>
+
+<pre><code class="language-bash"># you can specify a base image as a foundation to build on
+FROM ubuntu:16.04
+
+# make a partition, and specify the working directory
+VOLUME /opt
+WORKDIR /opt
+
+# install some base system packages
+RUN apt-get update &amp;&amp; apt-get install -y \
+    python3 \
+    python3-dev \
+    python3-pip \
+    python3-setuptools
+
+# install some python packages
+RUN pip3 install --upgrade pip
+RUN pip3 install \
+    scikit-learn==0.21.1 \
+    pandas==0.19.1
+
+# set the container's entry point, just a bash shell for now.
+# this can also be a single program to run, i.e. a python script.
+ENTRYPOINT [&quot;/bin/bash&quot;]
+</code></pre>
+
+<p>Think of a Dockerfile as a (detailed) recipe of setup steps we would need to do in order to get the system in the state we would like for the experiment. Examples include things like setting up a database, installing libraries, and initializing a directory structure. If you&#8217;ve ever made a nice shell script to do some setup like this for you, you were not far from the typical Docker workflow. There are many benefits that Docker has over a shell script for this, most notably being <em>containerization</em>: with Docker containers, we are abstracted away from the host system that the container is running on. The virtual system that the container is running in is defined in its own process. Because of this, we can have multiple containers running completely different setups, but on the same host machine. How&#8217;s that for some insulation against system dependency hell?</p>
+
+<p>Additionally, we are further insulated from issues like missing files and differences of system state. We know <em>exactly</em> what the system state will be when it is run. We know this because we have made it so via the explicit instructions in the Dockerfile.</p>
+
+<p>To actually build the image, we use a command like the following:</p>
+
+<pre><code class="language-bash">docker build \
+    -t my_first_container \
+    -f Dockerfile
+</code></pre>
+
+<p>At this point, we have built the image. With this image, we can repeatedly instantiate it as desired, e.g. to perform multiple experiments.</p>
+
+<pre><code class="language-bash">docker run \
+    --rm \
+    -it \
+    my_first_container
+</code></pre>
+
+<p>Voila!</p>
+
+<p>If we left at this point and ran in N directions to do various different experiments, these commands may get rather cumbersome to type&#8230;</p>
+
+<pre><code class="language-bash">docker run \
+    --mount type=bind,source=&quot;$(pwd)&quot;,target=/opt \
+    --mount type=bind,source=${CORPORA_DIR},target=/corpora \
+    -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
+    -ti \
+    --rm \
+    my_advanced_container \
+    jupyter-lab \
+        --allow-root \
+        --ip=0.0.0.0 \
+        --port=${JUPYTER_PORT} \
+        --no-browser \
+        2&gt;&amp;1 | tee log.txt
+</code></pre>
+
+<p>Don&#8217;t worry if your eyes gloss over at this. The point is it&#8217;s a lot to keep typing. That&#8217;s fine though, we have shell scripts for a reason. With shell scripts, we can encapsulate minute details of making a very specific sequence of commands into something as mindless as <code>bash doit.sh</code>. However, consider also a scenario in which your Dockerfile definition depends on other files (i.e. a requirements.txt file or a file of environment variables to use). In this case, we also would like to know <em>automatically</em> when the Docker image needs to be re-created, based on upstream <em>dependencies</em>.</p>
+
+<p>So what has four letters, saves you from typing long, arduous commands, and automates dependency management?</p>
+
+<h2 id="make">Make</h2>
+
+<p>GNU Make is a wonderous tool, gifted to us by the same software movement that has made the digital world what it is today. I&#8217;ll save you a more sparkly introduction and jump into the core abstraction of what it is: a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph" target="_blank">DAG</a>-based approach to intelligently managing dependencies of actions in a process, in order to <em>efficiently</em> achieve a desired outcome.</p>
+
+<p>Ok, it&#8217;s also a convenient way to compile C code. But focus on the first definition, and think bigger! Re-using the general DAG-based dependency management idea has led to some great tools over the years, like <a href="https://github.com/Factual/drake" target="_blank">Drake</a> (not the rapper), <a href="https://github.com/spotify/luigi" target="_blank">Luigi</a> (not Mario&#8217;s brother), and perhaps most notably <a href="https://airflow.apache.org/" target="_blank">Airflow</a> (AirBnB&#8217;s baby, but now part of the Apache Foundation).</p>
+
+<p>Consider the contrived example below. We&#8217;d like to make predictions on audio-visual data with a trained model. As a new raw image appears, do we need to re-train the model in order to create a prediction? Setting aside applications such as online learning, we do not. Similarly, say we just updated some parameters of our trained model. Do we need to re-cull the raw images, in order to re-create the <em>same data sample</em>? Nope.</p>
+
+<div class="wp-block-image">
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1.png" alt="" class="wp-image-102" srcset="https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1.png 448w, https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1-300x297.png 300w" sizes="(max-width: 448px) 100vw, 448px" /></figure>
+</div>
+
+<p>This is where Make comes into play. By specifying a <a href="http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/" target="_blank">Makefile</a> with &#8220;targets&#8221; that correspond to (one or more) desired outputs in the DAG, invoking that target will automatically provide that outcome for you, while only re-invoking dependency processes that are necessary.</p>
+
+<p>Make can be used for pretty much anything that involves actions and their dependencies. It&#8217;s not always right tool in the shed (see <a href="https://airflow.apache.org/" target="_blank">Airflow</a> for this process on distributed applications), but it can get you pretty far. I even used it to generate the image above! Here&#8217;s what the Makefile looks like.</p>
+
+<pre><code class="language-bash"># the &quot;graph.png&quot; target specifies &quot;graph.dot&quot; as a dependency
+# when &quot;graph.png&quot; is invoked, it invokes &quot;graph.dot&quot; only if necessary
+
+graph.png: graph.dot
+    dot graph.dot -Tpng &gt; graph.png
+
+# the &quot;graph.dot&quot; target specifies &quot;make_graph.py&quot; as a dependency
+# so, this command is only re-run when...
+#   1) make_graph.py changes
+#   2) graph.dot is not present
+graph.dot: make_graph.py
+    python make_graph.py
+</code></pre>
+
+<h2 id="marrying-the-two">Marrying the Two</h2>
+
+<p>So we&#8217;ve ailed over to struggles of reproducible work and introduced great tools to manage environment encapsulation (Docker) and dependency management (Make). These are two pretty cool cats, we should introduce them to each other!<figure class="wp-block-image"></p>
+
+<p><img src="https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-1024x683.jpg" alt="" class="wp-image-116" srcset="https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-1024x683.jpg 1024w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-300x200.jpg 300w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-768x512.jpg 768w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-850x567.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>Photo by&nbsp;<a href="https://unsplash.com/@productschool?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Product School</a>&nbsp;on&nbsp;<a href="https://unsplash.com/search/photos/meet?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Unsplash</a><br />
+P.S. Which one is Docker, and which is Make?</figcaption></figure></p>
+
+<p>Let&#8217;s say we&#8217;ve just found the <a href="https://magenta.tensorflow.org/" target="_blank">Magenta</a> project, and would like to set up an environment to consistently run demos and experiments in, without further regard to what version of <code>this_or_that.py</code> is running on someone&#8217;s computer. After all, on some level, we don&#8217;t care what version of <code>this_or_that.py</code> is running on your machine. What we care is that you are able to experience the same demo/result that the sender has experienced, with minimal effort.</p>
+
+<p>So, let&#8217;s set up a basic <code>Dockerfile</code> definition that can accomplish this. Thankfully, the Magenta folks have done the due diligence of creating a <a href="https://hub.docker.com/r/tensorflow/magenta/tags" target="_blank">base Docker image</a> themselves, to make it <em>trivial</em> to build from:</p>
+
+<pre><code class="language-bash"># base image
+FROM tensorflow/magenta
+
+# set partition and working directory
+VOLUME /opt
+WORKDIR /opt
+
+# install base system packages
+RUN apt-get update &amp;&amp; apt-get install -y \
+    vim \
+    portaudio19-dev
+
+# install python libraries
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r /tmp/requirements.txt
+
+# container entry point
+ENTRYPOINT [&quot;/bin/bash&quot;]
+</code></pre>
+
+<p>After specifying the base image as Magenta&#8217;s, we set a working directory on an <code>/opt</code> volume, install some system-level and python-level dependencies, and make a simple <code>bash</code> entry point until we have a working application. A typical <code>requirements.txt</code> file might look like this:</p>
+
+<pre><code class="language-bash">jupyterlab
+seaborn
+scikit-learn
+matplotlib
+pyaudio
+</code></pre>
+
+<p>Awesome. So now we have a specification of our desired environment. We can now make a <code>Makefile</code> which handles some of the dependencies at play:</p>
+
+<pre><code class="language-bash"># use the name of the current directory as the docker image tag
+DOCKERFILE ?= Dockerfile
+DOCKER_TAG ?= $(shell echo ${PWD} | rev | cut -d/ -f1 | rev)
+DOCKER_IMAGE = ${DOCKER_USERNAME}/${DOCKER_REPO}:${DOCKER_TAG}
+
+$(DOCKERFILE): requirements.txt
+    docker build \
+        -t ${DOCKER_IMAGE} \
+        -f ${DOCKERFILE} \
+        .
+
+.PHONY image
+image: $(DOCKERFILE)
+
+.PHONY: run
+run:
+     nvidia-docker run \
+         --mount type=bind,source=&quot;$(shell pwd)&quot;,target=/opt \
+         -i \
+         --rm \
+         -t $(DOCKER_IMAGE)
+</code></pre>
+
+<p>This <code>Makefile</code> specifies targets for <code>run</code>, <code>image</code>, and <code>$(DOCKERFILE)</code>. The <code>$(DOCKERFILE)</code> target lists <code>requirements.txt</code> as a dependency, and thus will trigger a re-build of the Docker image when that file changes. The <code>image</code> target is a simple alias for the <code>$(DOCKERFILE)</code> target. Finally, the <code>run</code> target allows a concise call to execute the desired program in the Docker container, as opposed to typing out the laborious command each time.</p>
+
+<h2 id="one-docker-to-rule-them-all">One Docker to Rule Them All?</h2>
+
+<div class="wp-block-image">
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker.jpg" alt="" class="wp-image-111" srcset="https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker.jpg 400w, https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker-300x225.jpg 300w" sizes="(max-width: 400px) 100vw, 400px" /></figure>
+</div>
+
+<p>At this point, you may be motivated to go off and define every possible dependency in a <code>Dockerfile</code>, in order to never again be plagued with the troubles of ensuring an appropriate environment for your next project. For example, Floydhub has an <a href="https://github.com/floydhub/dl-docker" target="_blank">all-in-one Docker image</a> for deep learning projects. This image specification includes <em>numerous</em> deep learning frameworks and supporting python libraries.</p>
+
+<p>Don&#8217;t do that!</p>
+
+<p>For the sake of argument, let&#8217;s take that to the limit. After the next 100 projects that you work on, what will your Docker image look like? And what about after the next 1000 projects? Over time, it will just become as bloated as if you had incrementally changed your main OS in each project. This goes against the containerization philosophy of Docker &#8212; your containers should be lightweight while remaining sufficient.</p>
+
+<p>Furthermore, with all of that bloat you lose the ability to sustain multiple directions of projects that require different versions of dependencies. What if one of your projects requires the latest version of Tensorflow to run, but you don&#8217;t want to update the 99 previous projects (and deal with all of the failures the updates bring)?</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In this part of the Towards Efficient and Reproducible (TEAR) ML Workflows series, we&#8217;ve established the basis for making experiments and applications a relatively painless process. We used containerization via Docker to ensure experiments and applications are <strong>reproducible</strong> and easy to execute. We then used some automatic dependency management via Make for keeping experiment pipelines <strong>efficient</strong> and simple to run.<figure class="wp-block-image"></p>
+
+<p><img src="https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-1024x689.jpg" alt="" class="wp-image-114" srcset="https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-1024x689.jpg 1024w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-300x202.jpg 300w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-768x517.jpg 768w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-850x572.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>Photo by&nbsp;<a href="https://unsplash.com/@shs521?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Susan Holt Simpson</a>&nbsp;on&nbsp;<a href="https://unsplash.com/collections/4885214/blog-photos?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Unsplash</a></figcaption></figure></p>
+
+<p>It&#8217;s worth noting that there are numerous alternative solutions to these two; however, they follow the same general <em>patterns</em>: containerization gives you reproducibility and automatic dependency management gives you efficiency. From there, the value added in other solutions usually comes down to bells and whistles like cloud integration, scalability, or general ease of use. To each, your own choice of tools.</p>
+
+<p>Next, we’ll look at giving some more power to each of these processes, saving us more time and making them more reusable. We’ll also look at some best practices on how to properly collaborate with others when building these processes.</p>
+
+    </div>
+
+    
+
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/machine-learning/">machine-learning</a>
+  
+  <a class="badge badge-light" href="/tags/reproducability/">reproducability</a>
+  
+  <a class="badge badge-light" href="/tags/software/">software</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+  
+  
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="/authors/anthonyagnone/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js" integrity="sha256-0w92bcB21IY5+rGI84MGj52jNfHNbXVeQLrZ0CGdjNY=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/bash.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+
+  
+  <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+  <style type="text/css">
+      #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+       
+  </style>
+  <div id="mc_embed_signup">
+  <form action="https://gmail.us20.list-manage.com/subscribe/post?u=00c13adfd209fafd174cb0104&amp;id=0e87e34650" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <div id="mc_embed_signup_scroll">
+      <label for="mce-EMAIL">Want More of the Same?</label>
+      <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+      
+      <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_00c13adfd209fafd174cb0104_0e87e34650" tabindex="-1" value=""></div>
+      <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+      </div>
+  </form>
+  </div>
+  
+
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
