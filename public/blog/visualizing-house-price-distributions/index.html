@@ -88,6 +88,20 @@
 
   
   
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-129617463-1', 'auto');
+      
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
   
 
   
@@ -120,7 +134,7 @@
     
       <meta property="article:published_time" content="2019-07-19T18:29:33&#43;00:00">
     
-    <meta property="article:modified_time" content="2019-07-19T18:29:33&#43;00:00">
+    <meta property="article:modified_time" content="2019-07-30T20:16:34-04:00">
   
 
   
@@ -309,7 +323,7 @@
 
 
 <meta content="2019-07-19 18:29:33 &#43;0000 UTC" itemprop="datePublished">
-<meta content="2019-07-19 18:29:33 &#43;0000 UTC" itemprop="dateModified">
+<meta content="2019-07-30 20:16:34 -0400 EDT" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -333,8 +347,10 @@
     
     
       
+          Last updated on
+      
     
-    <time>Jul 19, 2019</time>
+    <time>Jul 30, 2019</time>
   </span>
   
 
@@ -522,8 +538,19 @@
 <p>So, what algorithms are at our disposal for traversing through a network of nodes in different ways? Of course, breadth-first search (BFS) and depth-first search (DFS) quickly come to mind. For the curious, have a look at the basic logic flow of it below. Besides a set membership guard, new homes are only added to the collection when they satisfy the constraints asserted in the <code>meets_criteria</code> function. For now, I do a simple L2 distance check between a pre-defined root lat/long location and the current home’s location. This criterion encouraged the search to stay local to the root, for the purposes of a well-connected and granular heat map. The implementation below uses DFS by popping off the end of the list (line 5) and adding to the end of the list (14), but BFS can be quickly achieved by changing either line (but not both) to instead use the front of the list.</p>
 
 <p>Letting this algorithm run for 10,000 iterations on Atlanta homes produces the following map in just a few minutes!
-What’s more, the <a href="/files/atlanta_heatmap.html" target="_blank">generated webpage</a> from folium is interactive, allowing common map navigation tools like zooming and panning.
-To prove out its modularity, I generated some smaller-scale maps of prices for <a href="/files/boston_heatmap.html" target="_blank">Boston, MA</a> and <a href="/files/seattle_heatmap.html" target="_blank">Seattle, WA</a> as well.</p>
+What’s more, the
+<a href="/files/atlanta_heatmap.html" target="_blank">
+generated webpage
+</a>
+from folium is interactive, allowing common map navigation tools like zooming and panning.
+To prove out its modularity, I generated some smaller-scale maps of prices for
+<a href="/files/boston_heatmap.html" target="_blank">
+Boston, MA
+</a> and
+<a href="/files/seattle_heatmap.html" target="_blank">
+Seattle, WA
+</a>
+as well.</p>
 
 <div class="wp-block-image">
   <figure class="aligncenter"><img src="https://cdn-images-1.medium.com/max/800/1*Q81SBWiXe77l8xq8oqpgyw.png" alt="" /><figcaption>Heat map of Atlanta housing prices. See the interactive version <a href="/files/atlanta_heatmap.html" target="_blank">here</a>.
