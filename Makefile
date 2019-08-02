@@ -15,6 +15,12 @@ clean:
 build: clean  ## Build static site
 	hugo
 
+.PHONY: server
+server: build  ## Start a local server for the site
+	hugo server \
+		-D \
+		--disableFastRender
+
 .PHONY: stage
 stage: build ## Transfer to staging directory on remote host
 	rsync -azru . $(REMOTE_HOST):$(STAGE_DIR)/$(SITE_NAME)
