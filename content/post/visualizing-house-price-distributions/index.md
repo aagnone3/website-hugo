@@ -1,28 +1,31 @@
 ---
-title: Visualizing House Price Distributions
+title: "Visualizing House Price Distributions"
 subtitle: "With Zillow and python's Folium, it's easier than ever"
 summary: "With Zillow and python's Folium, it's easier than ever"
+publication: Towards Data Science
 authors:
 - anthonyagnone
 
 date: "2019-07-19T18:29:33Z"
 featured: false
 draft: false
-# url: /visualizing-house-price-distributions/
-# image: c.jpeg
-# featured_image: /wp-content/uploads/2019/07/c.jpeg
-image:
-  placement: 2
-  caption: ""
-  focal_point: ""
-  preview_only: false
+slug: /visualizing-house-price-distributions
+
 categories:
   - data
+
 tags:
   - algorithms
   - api
   - data-structures
   - data-visualization
+
+image:
+  placement: 2
+  caption: ""
+  focal_point: ""
+  preview_only: false
+  
 
 ---
 ### Wait, but&nbsp;Why?

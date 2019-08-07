@@ -9,9 +9,7 @@ date: "2019-02-15T19:01:29Z"
 featured: false
 draft: false
 
-# url: /the-war-on-attention/
-# image: "brain.jpg"
-# featured_image: /wp-content/uploads/2019/02/brain.jpg
+slug: /the-war-on-attention
 image:
   placement: 2
   caption: ""

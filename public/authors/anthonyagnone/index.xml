@@ -5,12 +5,32 @@
     <link>https://anthonyagnone.com/authors/anthonyagnone/</link>
       <atom:link href="https://anthonyagnone.com/authors/anthonyagnone/index.xml" rel="self" type="application/rss+xml" />
     <description>anthonyagnone</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 19 Jul 2019 18:29:33 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 31 Jul 2019 18:50:28 -0400</lastBuildDate>
     <image>
       <url>https://anthonyagnone.com/img/me.jpeg</url>
       <title>anthonyagnone</title>
       <link>https://anthonyagnone.com/authors/anthonyagnone/</link>
     </image>
+    
+    <item>
+      <title>Test</title>
+      <link>https://anthonyagnone.com/blog/test/</link>
+      <pubDate>Wed, 31 Jul 2019 18:50:28 -0400</pubDate>
+      <guid>https://anthonyagnone.com/blog/test/</guid>
+      <description>&lt;p&gt;Hello, world.
+&lt;a href=&#34;https://anthonyagnone.com/files/atlanta_heatmap.html&#34; target=&#34;_blank&#34;&gt;
+generated webpage
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://anthonyagnone.com/files/atlanta_heatmap.html&#34;&gt;generated webpage&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://google.com&#34; target=&#34;_blank&#34;&gt;a static url link&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#/usr/bin/env bash
+echo &amp;quot;Here&#39;s a code snippet
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>Visualizing House Price Distributions</title>
@@ -95,7 +115,7 @@ Either way, the &lt;a rel=&#34;noreferrer noopener&#34; href=&#34;https://github
     </item>
     
     <item>
-      <title>Reproducible Data Processing: Make &#43; Docker</title>
+      <title>Reproducible Data Processing with Make &#43; Docker</title>
       <link>https://anthonyagnone.com/blog/reproducible-data-processing-make-docker/</link>
       <pubDate>Wed, 10 Jul 2019 18:11:01 +0000</pubDate>
       <guid>https://anthonyagnone.com/blog/reproducible-data-processing-make-docker/</guid>

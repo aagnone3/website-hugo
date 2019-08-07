@@ -1,28 +1,30 @@
 ---
-title: 'Reproducible Data Processing: Make + Docker'
-subtitle: Avoiding reproducibility hell with dependency management and containerization.
+title: "Reproducible Data Processing with Make + Docker"
+subtitle: Avoiding reproducibility hell with dependency management and containerization
 summary: Avoiding reproducibility hell with dependency management and containerization.
+publication: Towards Data Science
 authors:
 - anthonyagnone
+
 date: "2019-07-10T18:11:01Z"
 featured: false
 draft: false
-# akshay-nanavati-1462333-unsplash-300x200.jpg
-image:
-  placement: 2
-  caption: ""
-  focal_point: ""
-  preview_only: false
-# url: /reproducible-data-processing-make-docker/
-# image: akshay-nanavati-1462333-unsplash-300x200.jpg
-# featured_image: /wp-content/uploads/2019/05/akshay-nanavati-1462333-unsplash-300x200.jpg
+slug: /reproducible-data-processing-make-docker
+
 categories:
   - data
+
 tags:
   - machine-learning
   - reproducability
   - software
 
+image:
+  placement: 2
+  caption: ""
+  focal_point: ""
+  preview_only: false
+  
 ---
 ## Motivation
 

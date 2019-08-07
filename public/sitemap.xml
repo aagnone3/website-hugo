@@ -4,24 +4,53 @@
   
   <url>
     <loc>https://anthonyagnone.com/</loc>
-    <lastmod>2019-07-30T20:16:34-04:00</lastmod>
+    <lastmod>2019-07-31T18:50:28-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://anthonyagnone.com/authors/</loc>
-    <lastmod>2019-07-30T20:16:34-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://anthonyagnone.com/categories/</loc>
-    <lastmod>2019-07-30T20:16:34-04:00</lastmod>
+    <lastmod>2019-07-31T18:50:28-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://anthonyagnone.com/tags/</loc>
+    <lastmod>2019-07-31T18:50:28-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://anthonyagnone.com/blog/test/</loc>
+    <lastmod>2019-07-31T18:50:28-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://anthonyagnone.com/authors/anthonyagnone/</loc>
+    <lastmod>2019-07-31T18:50:28-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://anthonyagnone.com/tags/t1/</loc>
+    <lastmod>2019-07-31T18:50:28-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://anthonyagnone.com/tags/t2/</loc>
+    <lastmod>2019-07-31T18:50:28-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://anthonyagnone.com/tags/t3/</loc>
+    <lastmod>2019-07-31T18:50:28-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://anthonyagnone.com/categories/</loc>
     <lastmod>2019-07-30T20:16:34-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -33,12 +62,6 @@
   
   <url>
     <loc>https://anthonyagnone.com/tags/algorithms/</loc>
-    <lastmod>2019-07-30T20:16:34-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://anthonyagnone.com/authors/anthonyagnone/</loc>
     <lastmod>2019-07-30T20:16:34-04:00</lastmod>
     <priority>0</priority>
   </url>
