@@ -9,7 +9,9 @@ help: ## Display help
 
 .PHONY: clean
 clean:
-	rm -rf public
+	@rm -rf public
+	@find . -type f -name "*.pyc" -delete
+	@find . -type f -name __pycache__ | xargs rm -rf
 
 .PHONY: build
 build: clean  ## Build static site
