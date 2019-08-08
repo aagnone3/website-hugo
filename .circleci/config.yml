@@ -21,6 +21,10 @@ jobs:
             # - run: asldkfj
             - run: echo "Hello world"
 
+            - run:
+                name: temp
+                command: bash .circleci/blog_syndication.sh
+
             # # Download and cache dependencies
             # - restore_cache:
             #     keys:
@@ -54,3 +58,11 @@ jobs:
             # - store_artifacts:
             #     path: test-reports
             #     destination: test-reports
+            #
+            # - deploy:
+            #     command: |
+            #         # TODO obtain via github https://github.com/javorszky/circleci-calibration/blob/master/.circleci/phpcs.sh
+            #         target_branch=master
+            #         git checkout ${target_branch}
+            #         git reset --hard origin/${target_branch}
+            #         git diff --diff-filter=D ${CIRCLE_BRANCH}..
