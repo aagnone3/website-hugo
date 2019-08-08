@@ -18,8 +18,8 @@ jobs:
 
         steps:
             - checkout
-            - run: asldkfj
-            # - run: echo "Hello world"
+            # - run: asldkfj
+            - run: echo "Hello world"
 
             # # Download and cache dependencies
             # - restore_cache:
