@@ -36,7 +36,7 @@ Thanks to some great open source tools, you don&#8217;t have to be a software gu
 </p>
 
 <div class="wp-block-image">
-  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-1024x254.png" alt="" class="wp-image-89" srcset="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-1024x254.png 1024w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-300x75.png 300w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-768x191.png 768w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.37.49-PM-850x211.png 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>oh yeah, that file&#8230;</figcaption></figure>
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-6.37.49-PM-1024x254.png" alt="" class="wp-image-89" srcset="https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-6.37.49-PM-1024x254.png 1024w, https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-6.37.49-PM-300x75.png 300w, https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-6.37.49-PM-768x191.png 768w, https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-6.37.49-PM-850x211.png 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>oh yeah, that file&#8230;</figcaption></figure>
 </div>
 
 &#8230;and it&#8217;s something facepalm-worthy. Here you are, trying to hit the ground running with a friend or colleague on an interesting idea, and you&#8217;re now side-tracked debugging a file-not-found error. Welcome back to your intro programming course!
@@ -44,7 +44,7 @@ Thanks to some great open source tools, you don&#8217;t have to be a software gu
 I&#8217;m sure the owner of the code also loves nothing more than to spend a bunch of time helping someone step through these issues at a snail&#8217;s pace. The sheer euphoria you two have just shared over the promise of recent experimental results has now morphed into unspoken embarrassment and frustration that the demonstration has failed before showing any worth, whatsoever.
 
 <div class="wp-block-image">
-  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/07/over.jpg" alt="" class="wp-image-121" srcset="https://anthonyagnone.com/wp-content/uploads/2019/07/over.jpg 621w, https://anthonyagnone.com/wp-content/uploads/2019/07/over-300x194.jpg 300w" sizes="(max-width: 621px) 100vw, 621px" /></figure>
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/img/over.jpg" alt="" class="wp-image-121" srcset="https://anthonyagnone.com/img/over.jpg 621w, https://anthonyagnone.com/img/over-300x194.jpg 300w" sizes="(max-width: 621px) 100vw, 621px" /></figure>
 </div>
 
 But it&#8217;s fine. It&#8217;s fine! Your buddy knows just where to find that missing file. You&#8217;re told that you will have it within minutes, and then you will be on your way!
@@ -56,7 +56,7 @@ But it&#8217;s fine. It&#8217;s fine! Your buddy knows just where to find that m
 Aha! This is it! The time has come to join the ranks of esteemed data magicians, casting one keyboard spell after another, watching your data baby&#8217;s brain get progressively more advanced as it beckons for a role in a new Terminator movie! Let&#8217;s see what we get!
 
 <div class="wp-block-image">
-  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM.png" alt="" class="wp-image-90" srcset="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM.png 474w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-6.46.42-PM-300x128.png 300w" sizes="(max-width: 474px) 100vw, 474px" /><figcaption>but I did what you said 🙁</figcaption></figure>
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-6.46.42-PM.png" alt="" class="wp-image-90" srcset="https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-6.46.42-PM.png 474w, https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-6.46.42-PM-300x128.png 300w" sizes="(max-width: 474px) 100vw, 474px" /><figcaption>but I did what you said 🙁</figcaption></figure>
 </div>
 
 &#8230;yeah, we&#8217;ve all been there.
@@ -105,7 +105,7 @@ When you learn this flow for the first time, you feel freed from the hellish exi
 For example, say you would like to set up your machine learning project with a [MongoDB][7] database backend. No problem! `pip install pymongo` and then we&#8217;re home free! Not so fast&#8230;
 
 <div class="wp-block-image">
-  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-1024x329.png" alt="" class="wp-image-92" srcset="https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-1024x329.png 1024w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-300x96.png 300w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-768x247.png 768w, https://anthonyagnone.com/wp-content/uploads/2019/05/Screen-Shot-2019-05-18-at-7.16.23-PM-1-850x273.png 850w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-7.16.23-PM-1-1024x329.png" alt="" class="wp-image-92" srcset="https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-7.16.23-PM-1-1024x329.png 1024w, https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-7.16.23-PM-1-300x96.png 300w, https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-7.16.23-PM-1-768x247.png 768w, https://anthonyagnone.com/img/Screen-Shot-2019-05-18-at-7.16.23-PM-1-850x273.png 850w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
 </div>
 
 Well&#8230;that didn&#8217;t go as expected. Now, in addition to setting up my library dependencies, we need to also manage a library outside of python? Gah! Further delays! Time to google for the package name for mongoDB&#8230;
@@ -194,7 +194,7 @@ Ok, it&#8217;s also a convenient way to compile C code. But focus on the first d
 Consider the contrived example below. We&#8217;d like to make predictions on audio-visual data with a trained model. As a new raw image appears, do we need to re-train the model in order to create a prediction? Setting aside applications such as online learning, we do not. Similarly, say we just updated some parameters of our trained model. Do we need to re-cull the raw images, in order to re-create the _same data sample_? Nope.
 
 <div class="wp-block-image">
-  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1.png" alt="" class="wp-image-102" srcset="https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1.png 448w, https://anthonyagnone.com/wp-content/uploads/2019/05/graph-1-300x297.png 300w" sizes="(max-width: 448px) 100vw, 448px" /></figure>
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/img/graph-1.png" alt="" class="wp-image-102" srcset="https://anthonyagnone.com/img/graph-1.png 448w, https://anthonyagnone.com/img/graph-1-300x297.png 300w" sizes="(max-width: 448px) 100vw, 448px" /></figure>
 </div>
 
 This is where Make comes into play. By specifying a [Makefile][13] with &#8220;targets&#8221; that correspond to (one or more) desired outputs in the DAG, invoking that target will automatically provide that outcome for you, while only re-invoking dependency processes that are necessary.
@@ -220,7 +220,7 @@ graph.dot: make_graph.py
 
 So we&#8217;ve ailed over to struggles of reproducible work and introduced great tools to manage environment encapsulation (Docker) and dependency management (Make). These are two pretty cool cats, we should introduce them to each other!<figure class="wp-block-image">
 
-<img src="https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-1024x683.jpg" alt="" class="wp-image-116" srcset="https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-1024x683.jpg 1024w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-300x200.jpg 300w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-768x512.jpg 768w, https://anthonyagnone.com/wp-content/uploads/2019/07/product-school-mEpShydwItI-unsplash-850x567.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>Photo by&nbsp;[Product School][14]&nbsp;on&nbsp;[Unsplash][15]  
+<img src="https://anthonyagnone.com/img/product-school-mEpShydwItI-unsplash-1024x683.jpg" alt="" class="wp-image-116" srcset="https://anthonyagnone.com/img/product-school-mEpShydwItI-unsplash-1024x683.jpg 1024w, https://anthonyagnone.com/img/product-school-mEpShydwItI-unsplash-300x200.jpg 300w, https://anthonyagnone.com/img/product-school-mEpShydwItI-unsplash-768x512.jpg 768w, https://anthonyagnone.com/img/product-school-mEpShydwItI-unsplash-850x567.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>Photo by [Product School][14] on [Unsplash][15]  
 P.S. Which one is Docker, and which is Make?</figcaption></figure> 
 
 Let&#8217;s say we&#8217;ve just found the [Magenta][16] project, and would like to set up an environment to consistently run demos and experiments in, without further regard to what version of `this_or_that.py` is running on someone&#8217;s computer. After all, on some level, we don&#8217;t care what version of `this_or_that.py` is running on your machine. What we care is that you are able to experience the same demo/result that the sender has experienced, with minimal effort.
@@ -290,7 +290,7 @@ This `Makefile` specifies targets for `run`, `image`, and `$(DOCKERFILE)`. The `
 ## One Docker to Rule Them All?
 
 <div class="wp-block-image">
-  <figure class="aligncenter"><img src="https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker.jpg" alt="" class="wp-image-111" srcset="https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker.jpg 400w, https://anthonyagnone.com/wp-content/uploads/2019/07/docker-docker-docker-docker-docker-docker-300x225.jpg 300w" sizes="(max-width: 400px) 100vw, 400px" /></figure>
+  <figure class="aligncenter"><img src="https://anthonyagnone.com/img/docker-docker-docker-docker-docker-docker.jpg" alt="" class="wp-image-111" srcset="https://anthonyagnone.com/img/docker-docker-docker-docker-docker-docker.jpg 400w, https://anthonyagnone.com/img/docker-docker-docker-docker-docker-docker-300x225.jpg 300w" sizes="(max-width: 400px) 100vw, 400px" /></figure>
 </div>
 
 At this point, you may be motivated to go off and define every possible dependency in a `Dockerfile`, in order to never again be plagued with the troubles of ensuring an appropriate environment for your next project. For example, Floydhub has an [all-in-one Docker image][18] for deep learning projects. This image specification includes _numerous_ deep learning frameworks and supporting python libraries.
@@ -303,13 +303,19 @@ Furthermore, with all of that bloat you lose the ability to sustain multiple dir
 
 ## Conclusion
 
-In this part of the Towards Efficient and Reproducible (TEAR) ML Workflows series, we&#8217;ve established the basis for making experiments and applications a relatively painless process. We used containerization via Docker to ensure experiments and applications are **reproducible** and easy to execute. We then used some automatic dependency management via Make for keeping experiment pipelines **efficient** and simple to run.<figure class="wp-block-image">
-
-<img src="https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-1024x689.jpg" alt="" class="wp-image-114" srcset="https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-1024x689.jpg 1024w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-300x202.jpg 300w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-768x517.jpg 768w, https://anthonyagnone.com/wp-content/uploads/2019/07/susan-holt-simpson-2nSdQEd-Exc-unsplash-850x572.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>Photo by&nbsp;[Susan Holt Simpson][19]&nbsp;on&nbsp;[Unsplash][20]</figcaption></figure> 
+In this part of the Towards Efficient and Reproducible (TEAR) ML Workflows series, we&#8217;ve established the basis for making experiments and applications a relatively painless process. We used containerization via Docker to ensure experiments and applications are **reproducible** and easy to execute. We then used some automatic dependency management via Make for keeping experiment pipelines **efficient** and simple to run.
+<figure class="wp-block-image">
+<img 
+src="https://anthonyagnone.com/img/susan-holt-simpson-2nSdQEd-Exc-unsplash-1024x689.jpg" 
+alt="" 
+class="wp-image-114" 
+srcset="https://anthonyagnone.com/img/susan-holt-simpson-2nSdQEd-Exc-unsplash-1024x689.jpg 1024w, https://anthonyagnone.com/img/susan-holt-simpson-2nSdQEd-Exc-unsplash-300x202.jpg 300w, https://anthonyagnone.com/img/susan-holt-simpson-2nSdQEd-Exc-unsplash-768x517.jpg 768w, https://anthonyagnone.com/img/susan-holt-simpson-2nSdQEd-Exc-unsplash-850x572.jpg 850w" 
+sizes="(max-width: 1024px) 100vw, 1024px" 
+/>
+<figcaption>Photo by [Susan Holt Simpson][19] on [Unsplash][20]</figcaption>
+</figure> 
 
 It&#8217;s worth noting that there are numerous alternative solutions to these two; however, they follow the same general _patterns_: containerization gives you reproducibility and automatic dependency management gives you efficiency. From there, the value added in other solutions usually comes down to bells and whistles like cloud integration, scalability, or general ease of use. To each, your own choice of tools.
-
-Next, we’ll look at giving some more power to each of these processes, saving us more time and making them more reusable. We’ll also look at some best practices on how to properly collaborate with others when building these processes.
 
 [1]: https://www.docker.com/
 [2]: https://www.gnu.org/software/make/

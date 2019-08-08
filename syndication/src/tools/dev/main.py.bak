@@ -1,0 +1,21 @@
+from argparse import ArgumentParser
+
+from api import DevAPI
+from convert import DevConverter
+
+
+def parse_args():
+    parser = ArgumentParser()
+    parser.add_argument(dest='in_file', help='Path to Markdown file in Hugo format')
+    parser.add_argument(dest='out_file', help='Desired path to Markdown file in dev.to format')
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    converter = DevConverter('https://anthonyagnone.com')
+    post, summary = converter.convert(args.in_file)
+    print(post)
+    with open(args.out_file, 'w') as fp:
+        fp.write(post.content)
+    DevAPI().post(post, summary)
