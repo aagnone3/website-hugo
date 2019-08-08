@@ -23,11 +23,7 @@ jobs:
 
             - run:
                 name: temp
-                command: |
-                    target_branch=master
-                    git checkout ${target_branch}
-                    git reset --hard origin/${target_branch}
-                    git diff --diff-filter=D ${CIRCLE_BRANCH}.. > diffs.txt
+                command: bash blog_syndication.sh
 
             # # Download and cache dependencies
             # - restore_cache:
