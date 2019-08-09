@@ -59,8 +59,7 @@ jobs:
 
             - run:
                   name: Deploy to website
-                  command: |
-                      make -f Makefile.ci deploy 2>&1 | tee deploy.log
+                  command: .circleci/blog_syndication.sh
 
             - store_artifacts:
                 path: deploy.log
