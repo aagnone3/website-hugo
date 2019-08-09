@@ -29,6 +29,3 @@ diff_output=$(git diff --diff-filter=D ${CIRCLE_BRANCH}..)
     # no new blogs, still need to return to active branch
     git checkout ${CIRCLE_BRANCH}
 }
-
-set +e
-ssh -o BatchMode=yes -F etc/ssh_cfg website ls
