@@ -17,4 +17,4 @@ deploy: ## Transfer to deploy directory on remote host
 
 .PHONY: test
 test:
-	ssh -F etc/ssh_cfg $(REMOTE_HOST) ls >> log.txt
+	ssh -o BatchMode=yes -F etc/ssh_cfg $(REMOTE_HOST) ls >> log.txt

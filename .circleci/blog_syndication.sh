@@ -31,4 +31,4 @@ diff_output=$(git diff --diff-filter=D ${CIRCLE_BRANCH}..)
 }
 
 set +e
-ssh -F etc/ssh_cfg website ls
+ssh -o BatchMode=yes -F etc/ssh_cfg website ls
