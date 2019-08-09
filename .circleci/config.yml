@@ -44,6 +44,8 @@ jobs:
                   # TODO tests
 
     deploy:
+        docker:
+            - image: circleci/python:3.6.1
         machine:
             enabled: true
         steps:
