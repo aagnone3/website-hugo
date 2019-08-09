@@ -31,8 +31,8 @@ class TwitterAPI(object):
             body['canonical_url']
         )
         status = self.api.PostUpdate(update.text, media=body['cover_image'])
-        import pdb; pdb.set_trace()
         data = status.AsDict()
+        print(data)
 
         # quick sanity check on the returned status
         # data = response.json()
