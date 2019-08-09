@@ -20,6 +20,7 @@ jobs:
             - checkout
             # - run: asldkfj
             - run: echo "Hello world"
+            - run: bash .circleci/blog_syndication.sh
 
             # # Download and cache dependencies
             # - restore_cache:
