@@ -18,12 +18,6 @@ jobs:
 
         steps:
             - checkout
-            - run:
-                name: syndicate
-                command: |
-                    echo "Hello world"
-                    pip install --user -r syndication/src/requirements.txt
-                    bash .circleci/blog_syndication.sh
 
             # # Download and cache dependencies
             # - restore_cache:
@@ -32,30 +26,44 @@ jobs:
             #       # fallback to using the latest cache if no exact match is found
             #       - v1-dependencies-
 
-            # - run:
-            #     name: install dependencies
-            #     command: |
-            #       python3 -m venv venv
-            #       . venv/bin/activate
-            #       pip install -r requirements.txt
+            - run:
+                name: install dependencies
+                command: |
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r syndication/src/requirements.txt
 
             # - save_cache:
             #     paths:
             #       - ./venv
             #     key: v1-dependencies-{{ checksum "requirements.txt" }}
 
-            # # run tests!
-            # # this example uses Django's built-in test-runner
-            # # other common Python testing frameworks include pytest and nose
-            # # https://pytest.org
-            # # https://nose.readthedocs.io
-            # - run:
-            #     name: run tests
-            #     command: |
-            #       . venv/bin/activate
-            #       python manage.py test
+            - run:
+                name: run tests
+                command: |
+                  . venv/bin/activate
+                  echo "Tests here"
+                  # python manage.py test
+    deploy:
+        machine:
+            enabled: true
+        steps:
+            - run:
+                name: Deploy to website
+                command: |
+                    make -f Makefile.ci stage
+                    # bash .circleci/blog_syndication.sh
+                    # make -f Makefile.ci deploy
 
-            - store_artifacts:
-                path: log.txt
-            - store_artifacts:
-                path: /tmp/new_files.lst
+workflows:
+    version: 2
+    build-and-deploy:
+        jobs:
+            - build
+            - deploy:
+                requires:
+                    - build
+                # only deploy from the master branch
+                filters:
+                    branches:
+                        only: master

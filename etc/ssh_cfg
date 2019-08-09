@@ -1,0 +1,9 @@
+Host *
+    ServerAliveInterval 10
+    ServerAliveCountMax 3
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Host website
+    HostName anthonyagnone.com
+    User aagnone

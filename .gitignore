@@ -9,7 +9,7 @@ resources/_gen/images/blog/test
 ##########################
 
 .DS_Store
-etc/
+etc_aagnone/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
