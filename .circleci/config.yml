@@ -55,11 +55,12 @@ jobs:
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install -r syndication/src/requirements.txt
-                    sudo apt-get update && sudo apt-get install -y rsync vim
+                    sudo apt-get update && sudo apt-get install -y rsync vim hugo
 
             - run:
                   name: Deploy to website
                   command: |
+                      . venv/bin/activate
                       bash .circleci/blog_syndication.sh
 
             - store_artifacts:
