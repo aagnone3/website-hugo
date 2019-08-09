@@ -43,7 +43,7 @@ jobs:
                 command: |
                   . venv/bin/activate
                   echo "Tests here"
-                  python manage.py test
+                  # python manage.py test
     deploy:
         machine:
             enabled: true
