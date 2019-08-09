@@ -14,4 +14,4 @@ stage: ## Transfer to staging directory on remote host
 .PHONY: deploy
 deploy: ## Transfer to deploy directory on remote host
 	rsync -e 'ssh -o BatchMode=yes -F etc/ssh_cfg' -azru . $(REMOTE_HOST):$(SITE_NAME)
-	$(shell .circlecli/blog_syndication.sh)
+	$(shell .circleci/blog_syndication.sh)

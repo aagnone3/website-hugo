@@ -51,7 +51,7 @@ jobs:
             - run:
                   name: Deploy to website
                   command: |
-                      make -f Makefile.ci deploy > deploy.log
+                      make -f Makefile.ci deploy 2>&1 | tee deploy.log
 
             - store_artifacts:
                 path: deploy.log
