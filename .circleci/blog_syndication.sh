@@ -24,7 +24,15 @@ function pull_request() {
     diff_output=$(git diff --diff-filter=D ${CIRCLE_BRANCH}..)
 }
 
-[[ "${target_branch}" == "${CIRCLE_BRANCH}" ]] && master_update || pull_request
+[[ "${target_branch}" == "${CIRCLE_BRANCH}" ]] && {
+    is_deploy=1
+    make -f Makefile.ci deploy 2>&1 | tee deploy.log
+    master_update
+} || {
+    is_deploy=0
+    make -f Makefile.ci stage 2>&1 | tee deploy.log
+    pull_request
+}
 
 # use a diff to detect and syndicate any new blog posts
 [[ ! -z ${diff_output} ]] && {
@@ -43,8 +51,7 @@ function pull_request() {
         while read line; do
             name=$(echo ${line} | cut -d ' ' -f4 | rev | cut -d/ -f2 | rev)
             echo $name
-            # TODO pass extra flag to indicate verify vs deploy
-            python syndication/src/syndicate.py content/post/${name}/index.md
+            python syndication/src/syndicate.py content/post/${name}/index.md -d ${is_deploy}
         done < /tmp/new_files.lst
     }
 } || {

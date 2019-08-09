@@ -10,7 +10,18 @@ def parse_args():
         dest='in_file',
         help='Path to Markdown file in Hugo format'
     )
-    return parser.parse_args()
+    parser.add_argument(
+        '-d',
+        '--deploy',
+        dest='deploy',
+        type=int,
+        required=False,
+        default=0,
+        help='Whether this is a deploy.'
+    )
+    args = parser.parse_args()
+    args.deploy = bool(args.deploy)
+    return args
 
 
 def persist(article, out_file):
@@ -38,12 +49,16 @@ def main():
         # convert, persist, and post the article
         returned = converter.convert(args.in_file)
         if returned is not None:
-            print('yay {}'.format(site))
-            # post, summary = returned
-            # persist(post, make_out_file(args.in_file, site))
-            # api.post(post, summary)
+            post, summary = returned
+            persist(post, make_out_file(args.in_file, site))
+            if args.deploy:
+                print('Deploying to {}'.format(site))
+                print('But not')
+                # api.post(post, summary)
+            else:
+                print('(Globally) not deploying to {}'.format(site))
         else:
-            print('nay {}'.format(site))
+            print('(Selectively) not deploying to {}'.format(site))
 
 
 if __name__ == '__main__':
