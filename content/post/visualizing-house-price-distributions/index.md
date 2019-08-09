@@ -3,6 +3,10 @@ title: "Visualizing House Price Distributions"
 subtitle: "With Zillow and python's Folium, it's easier than ever"
 summary: "With Zillow and python's Folium, it's easier than ever"
 publication: Towards Data Science
+platforms:
+    - medium
+    - dev
+    - twitter
 authors:
 - anthonyagnone
 

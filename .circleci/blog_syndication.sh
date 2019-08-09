@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
+# TODO obtain target branch from github curl
 target_branch=master
 git checkout ${target_branch}
 git reset --hard origin/${target_branch}
-git diff --diff-filter=D ${CIRCLE_BRANCH}.. > diffs.txt
 diff_output=$(git diff --diff-filter=D ${CIRCLE_BRANCH}..)
 
 [[ ! -z ${diff_output} ]] && {
     git diff --diff-filter=A ..${CIRCLE_BRANCH} | grep 'diff.*content\/.*index\.md' > /tmp/new_files.lst
-    for line in $(cat /tmp/new_files.lst); do
+    while read line; do
         name=$(echo ${line} | cut -d ' ' -f4 | rev | cut -d/ -f2 | rev)
         echo $name >> names.lst
-    done
+        python syndication/src/syndicate.py content/post/${name}/index.md > log.$line.txt
+    done < /tmp/new_files.lst
 }

@@ -3,6 +3,10 @@ title: "Reproducible Data Processing with Make + Docker"
 subtitle: Avoiding reproducibility hell with dependency management and containerization
 summary: Avoiding reproducibility hell with dependency management and containerization.
 publication: Towards Data Science
+platforms:
+    - medium
+    - dev
+    - twitter
 authors:
 - anthonyagnone
 

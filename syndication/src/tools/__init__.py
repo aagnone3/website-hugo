@@ -4,13 +4,7 @@ from .twitter import TwitterConverter, TwitterAPI
 
 
 api_factory = {
-    'dev': DevAPI,
-    'medium': MediumAPI,
-    'twitter': TwitterAPI
-}
-
-converter_factory = {
-    'dev': DevConverter,
-    'medium': MediumConverter,
-    'twitter': TwitterConverter
+    'dev': (DevAPI, DevConverter),
+    'medium': (MediumAPI, MediumConverter),
+    'twitter': (TwitterAPI, TwitterConverter)
 }

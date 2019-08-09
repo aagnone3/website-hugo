@@ -8,8 +8,12 @@ import frontmatter
 
 class BaseConverter(object):
 
-    def __init__(self, site):
+    def __init__(self, site, name):
         self.site = site
+        self.name = name
+
+    def should_process(self, matter):
+        return self.name in matter.get('platforms', list())
 
     def format_static_links(self, body):
         '''
