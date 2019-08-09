@@ -14,8 +14,6 @@ jobs:
             # documented at https://circleci.com/docs/2.0/circleci-images/
             # - image: circleci/postgres:9.4
 
-            # working_directory: ~/repo
-
         steps:
             - checkout
 
@@ -43,7 +41,8 @@ jobs:
                 command: |
                   . venv/bin/activate
                   echo "Tests here"
-                  # python manage.py test
+                  # TODO tests
+
     deploy:
         machine:
             enabled: true
@@ -52,10 +51,10 @@ jobs:
             - run:
                   name: Deploy to website
                   command: |
-                      ls
-                      make -f Makefile.ci stage
-                      # bash .circleci/blog_syndication.sh
-                      # make -f Makefile.ci deploy
+                      make -f Makefile.ci deploy > deploy.log
+
+            - store_artifacts:
+                path: deploy.log
 
 workflows:
     version: 2
