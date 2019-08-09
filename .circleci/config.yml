@@ -30,11 +30,18 @@ jobs:
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install -r syndication/src/requirements.txt
+                    sudo apt-get update && sudo apt-get install -y rsync vim hugo
 
             # - save_cache:
             #     paths:
             #       - ./venv
             #     key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+            - run:
+                  name: Pre-verify website deploy
+                  command: |
+                      . venv/bin/activate
+                      bash .circleci/blog_syndication.sh
 
             - run:
                 name: run tests
