@@ -1,0 +1,8 @@
+Host *
+    ServerAliveInterval 10
+    ForwardAgent yes
+    ServerAliveCountMax 3
+
+Host website
+    HostName anthonyagnone.com
+    User aagnone

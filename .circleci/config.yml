@@ -57,5 +57,3 @@ jobs:
 
             - store_artifacts:
                 path: log.txt
-            - store_artifacts:
-                path: /tmp/new_files.lst
