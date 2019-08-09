@@ -22,7 +22,7 @@ jobs:
                 name: syndicate
                 command: |
                     echo "Hello world"
-                    pip install -r syndication/src/requirements.txt
+                    pip install --user -r syndication/src/requirements.txt
                     bash .circleci/blog_syndication.sh
 
             # # Download and cache dependencies
