@@ -48,12 +48,14 @@ jobs:
         machine:
             enabled: true
         steps:
+            - checkout
             - run:
-                name: Deploy to website
-                command: |
-                    make -f Makefile.ci stage
-                    # bash .circleci/blog_syndication.sh
-                    # make -f Makefile.ci deploy
+                  name: Deploy to website
+                  command: |
+                      ls
+                      make -f Makefile.ci stage
+                      # bash .circleci/blog_syndication.sh
+                      # make -f Makefile.ci deploy
 
 workflows:
     version: 2
@@ -61,9 +63,9 @@ workflows:
         jobs:
             - build
             - deploy:
-                requires:
-                    - build
-                # only deploy from the master branch
-                filters:
-                    branches:
-                        only: master
+                  requires:
+                      - build
+                  # only deploy from the master branch
+                  filters:
+                      branches:
+                          only: master
