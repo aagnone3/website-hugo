@@ -59,7 +59,8 @@ jobs:
 
             - run:
                   name: Deploy to website
-                  command: .circleci/blog_syndication.sh
+                  command: |
+                      bash .circleci/blog_syndication.sh
 
             - store_artifacts:
                 path: deploy.log
