@@ -1,3 +1,4 @@
 python-twitter
 numpy
 pandas
+python-frontmatter
