@@ -37,7 +37,7 @@ jobs:
             - run:
                 name: Blog post syndication
                 command: |
-                    echo "skip"
+                    echo "Syndication step"
                     bash .circleci/blog_syndication.sh
             - run:
                 name: run tests
