@@ -41,16 +41,18 @@ function pull_request() {
     # dump blog-specific file additions to a file for reading
     git diff --diff-filter=A ..${CIRCLE_BRANCH} | grep 'diff.*content\/.*index\.md' > /tmp/new_files.lst
     n_new_blogs=$(cat /tmp/new_files.lst | wc -l)
-    echo "Found $n_new_blogs new blog posts to syndicate: $(cat /tmp/new_files.lst)"
+    echo "Found $n_new_blogs new blog posts to syndicate"
 
     # return to the active branch to access new content being merged
     git checkout ${CIRCLE_BRANCH}
 
     # syndicate new blog posts
     [[ ${n_new_blogs} -gt 0 ]] && {
+        i=0
         while read line; do
+            i=$((i+1))
             name=$(echo ${line} | cut -d ' ' -f4 | rev | cut -d/ -f2 | rev)
-            echo $name
+            echo "$i/$n_new_blogs: $name"
             python3 syndication content/post/${name}/index.md -d ${is_deploy}
         done < /tmp/new_files.lst
     }
