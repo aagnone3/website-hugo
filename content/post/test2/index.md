@@ -5,6 +5,9 @@ title: "Test"
 subtitle: "testing, testing"
 summary: "testing, testing"
 authors: ['anthonyagnone']
+platforms:
+    - medium
+    - twitter
 tags: [t1, t2, t3]
 categories: []
 slug: /test
