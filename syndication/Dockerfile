@@ -1,6 +1,7 @@
 FROM cibuilds/hugo:latest
 
-RUN apk --no-cache add \
+# RUN apk --no-cache add \
+RUN apk update && apk add \
     rsync \
     vim \
     python3 \
@@ -12,5 +13,9 @@ RUN apk --no-cache add \
 VOLUME /opt
 RUN mkdir /opt/hugo
 WORKDIR /opt/hugo
+
+COPY . /opt/hugo/
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install -r requirements.txt
 
 ENTRYPOINT /bin/bash

@@ -26,11 +26,11 @@ function pull_request() {
 
 [[ "${target_branch}" == "${CIRCLE_BRANCH}" ]] && {
     is_deploy=1
-    make -f Makefile.ci deploy 2>&1 | tee deploy.log
+    make deploy 2>&1 | tee deploy.log
     master_update
 } || {
     is_deploy=0
-    make -f Makefile.ci stage 2>&1 | tee deploy.log
+    make stage 2>&1 | tee deploy.log
     pull_request
 }
 
