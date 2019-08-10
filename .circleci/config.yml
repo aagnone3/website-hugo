@@ -5,10 +5,10 @@ version: 2
 jobs:
     build:
         docker:
-            - image: cibuilds/hugo:latest
-        working_directory: ~/hugo
+            # - image: cibuilds/hugo:latest
+            - image: aagnone/circleci-hugo:latest
         environment:
-            HUGO_BUILD_DIR: ~/hugo/public
+            HUGO_BUILD_DIR: /opt/hugo/public
         steps:
             - checkout
 
@@ -29,7 +29,6 @@ jobs:
             - run:
                 name: Install dependencies
                 command: |
-                    sudo apt-get update && sudo apt-get install -y rsync vim python3 python3-pip python3-virtualenv python3-setuptools
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install -r syndication/src/requirements.txt
@@ -47,6 +46,7 @@ jobs:
                 name: Blog post syndication
                 command: |
                     echo "skip"
+                    . venv/bin/activate
                     # bash .circleci/blog_syndication.sh
             - run:
                 name: run tests
@@ -56,14 +56,14 @@ jobs:
 
     deploy:
         docker:
-            - image: cibuilds/hugo:latest
+            # - image: cibuilds/hugo:latest
+            - image: aagnone/circleci-hugo:latest
         steps:
             - checkout
 
             - run:
                 name: install dependencies
                 command: |
-                    python3 -m venv venv
                     . venv/bin/activate
                     pip install -r syndication/src/requirements.txt
                     sudo apt-get update && sudo apt-get install -y rsync vim hugo
