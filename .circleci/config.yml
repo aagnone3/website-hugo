@@ -33,13 +33,12 @@ jobs:
             - run:
                 name: Pre-verification
                 command: |
-                    htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
-                    bash .circleci/blog_syndication.sh
+                    echo Not running htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
             - run:
                 name: Blog post syndication
                 command: |
                     echo "skip"
-                    # bash .circleci/blog_syndication.sh
+                    bash .circleci/blog_syndication.sh
             - run:
                 name: run tests
                 command: |

@@ -14,9 +14,11 @@ image: ## Build the container
 .PHONY: run
 run: ## Run the container
 	docker run \
-		-ti $(IMAGE) \
+		-ti \
+		--mount type=bind,source="$(shell pwd)",target=/opt/hugo \
 		--rm \
-		.
+		$(IMAGE) \
+		bash
 
 .PHONY: login
 login:
