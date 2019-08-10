@@ -30,7 +30,7 @@ function pull_request() {
     master_update
 } || {
     is_deploy=0
-    make stage 2>&1 | tee deploy.log
+    # make stage 2>&1 | tee deploy.log
     pull_request
 }
 
