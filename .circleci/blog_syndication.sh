@@ -35,7 +35,7 @@ function pull_request() {
 }
 
 # use a diff to detect and syndicate any new blog posts
-if [ ! -z ${diff_output} ]; then
+if [[ ! -z ${diff_output} ]]; then
     echo "Looking at diff output"
 
     # dump blog-specific file additions to a file for reading
