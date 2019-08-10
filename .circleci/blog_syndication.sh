@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -xeou pipefail
+set -eou pipefail
 
 # TODO obtain target branch from github curl
 target_branch=master
