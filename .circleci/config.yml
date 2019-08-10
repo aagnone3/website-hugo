@@ -27,12 +27,6 @@ jobs:
             #     key: v1-dependencies-{{ checksum "requirements.txt" }}
 
             - run:
-                name: Install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip install -r syndication/src/requirements.txt
-            - run:
                 name: Local build
                 command: |
                     HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
@@ -40,18 +34,15 @@ jobs:
                 name: Pre-verification
                 command: |
                     htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
-                    . venv/bin/activate
                     bash .circleci/blog_syndication.sh
             - run:
                 name: Blog post syndication
                 command: |
                     echo "skip"
-                    . venv/bin/activate
                     # bash .circleci/blog_syndication.sh
             - run:
                 name: run tests
                 command: |
-                    . venv/bin/activate
                     echo "Tests here"
 
     deploy:
@@ -62,16 +53,8 @@ jobs:
             - checkout
 
             - run:
-                name: install dependencies
-                command: |
-                    . venv/bin/activate
-                    pip install -r syndication/src/requirements.txt
-                    sudo apt-get update && sudo apt-get install -y rsync vim hugo
-
-            - run:
                   name: Deploy to website
                   command: |
-                      . venv/bin/activate
                       bash .circleci/blog_syndication.sh
 
             - store_artifacts:

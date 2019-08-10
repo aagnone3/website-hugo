@@ -51,7 +51,7 @@ function pull_request() {
         while read line; do
             name=$(echo ${line} | cut -d ' ' -f4 | rev | cut -d/ -f2 | rev)
             echo $name
-            python syndication/src/syndicate.py content/post/${name}/index.md -d ${is_deploy}
+            python3 syndication content/post/${name}/index.md -d ${is_deploy}
         done < /tmp/new_files.lst
     }
 } || {

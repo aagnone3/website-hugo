@@ -2,6 +2,8 @@
 REMOTE_HOST ?= website
 STAGE_DIR ?= staging
 SITE_NAME ?= anthonyagnone.com
+IMAGE ?= aagnone/circleci-hugo
+TAG ?= latest
 
 .PHONY: help
 help: ## Display help
@@ -14,3 +16,24 @@ stage: ## Transfer to staging directory on remote host
 .PHONY: deploy
 deploy: ## Transfer to deploy directory on remote host
 	rsync -e 'ssh -o BatchMode=yes -F etc/ssh_cfg' -azru . $(REMOTE_HOST):$(SITE_NAME)
+
+.PHONY: image
+image: ## Build the container
+	docker build \
+		-t $(IMAGE) \
+		.
+
+.PHONY: run
+run: ## Run the container
+	docker run \
+		-ti $(IMAGE) \
+		--rm \
+		.
+
+.PHONY: login
+login:
+	docker login
+
+.PHONY: push
+push: ## Push the image to Docker Hub
+	docker push $(IMAGE):$(TAG)
