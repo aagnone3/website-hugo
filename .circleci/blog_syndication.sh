@@ -41,7 +41,7 @@ function pull_request() {
     # dump blog-specific file additions to a file for reading
     git diff --diff-filter=A ..${CIRCLE_BRANCH} | grep 'diff.*content\/.*index\.md' > /tmp/new_files.lst
     n_new_blogs=$(cat /tmp/new_files.lst | wc -l)
-    echo "Found $n_new_blogs new blog posts to syndicate"
+    echo "Found $n_new_blogs new blog posts to syndicate: $(cat /tmp/new_files.lst)"
 
     # return to the active branch to access new content being merged
     git checkout ${CIRCLE_BRANCH}
