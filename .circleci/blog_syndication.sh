@@ -26,20 +26,20 @@ function pull_request() {
 
 [[ "${target_branch}" == "${CIRCLE_BRANCH}" ]] && {
     is_deploy=1
-    make -f Makefile.ci deploy 2>&1 | tee deploy.log
+    make deploy 2>&1 | tee deploy.log
     master_update
 } || {
     is_deploy=0
-    make -f Makefile.ci stage 2>&1 | tee deploy.log
+    # make stage 2>&1 | tee deploy.log
     pull_request
 }
 
 # use a diff to detect and syndicate any new blog posts
-[[ ! -z ${diff_output} ]] && {
+if [[ ! -z ${diff_output} ]]; then
     echo "Looking at diff output"
 
     # dump blog-specific file additions to a file for reading
-    git diff --diff-filter=A ..${CIRCLE_BRANCH} | grep 'diff.*content\/.*index\.md' > /tmp/new_files.lst
+    git diff --diff-filter=A ..${CIRCLE_BRANCH} | grep 'diff.*content\/.*index\.md' > /tmp/new_files.lst || true
     n_new_blogs=$(cat /tmp/new_files.lst | wc -l)
     echo "Found $n_new_blogs new blog posts to syndicate"
 
@@ -48,14 +48,17 @@ function pull_request() {
 
     # syndicate new blog posts
     [[ ${n_new_blogs} -gt 0 ]] && {
+        i=0
         while read line; do
+            i=$((i+1))
             name=$(echo ${line} | cut -d ' ' -f4 | rev | cut -d/ -f2 | rev)
-            echo $name
-            python syndication/src/syndicate.py content/post/${name}/index.md -d ${is_deploy}
+            echo "$i/$n_new_blogs: $name"
+            python3 syndication content/post/${name}/index.md -d ${is_deploy}
         done < /tmp/new_files.lst
     }
-} || {
+    echo "Done looking at diff output"
+else
     # no new blogs, still need to return to active branch
     echo "No diff output"
     git checkout ${CIRCLE_BRANCH}
-}
+fi

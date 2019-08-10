@@ -1,0 +1,4 @@
+python-twitter
+python-frontmatter
+Jinja2
+PyGithub

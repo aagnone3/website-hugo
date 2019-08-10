@@ -1,10 +1,7 @@
 ##########################
 # @aagnone3 custom
 content/post/test/*
-public/blog/test/*
-public/tags/t1
-public/tags/t2
-public/tags/t3
+public/
 resources/_gen/images/blog/test
 ##########################
 

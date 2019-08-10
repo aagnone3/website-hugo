@@ -5,15 +5,10 @@ version: 2
 jobs:
     build:
         docker:
-            # specify the version you desire here
-            # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-            - image: circleci/python:3.6.1
-
-            # Specify service dependencies here if necessary
-            # CircleCI maintains a library of pre-built images
-            # documented at https://circleci.com/docs/2.0/circleci-images/
-            # - image: circleci/postgres:9.4
-
+            - image: aagnone/circleci-hugo:latest
+              user: user
+        environment:
+            HUGO_BUILD_DIR: /home/user/public
         steps:
             - checkout
 
@@ -24,12 +19,7 @@ jobs:
             #       # fallback to using the latest cache if no exact match is found
             #       - v1-dependencies-
 
-            - run:
-                name: install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip install -r syndication/src/requirements.txt
+            - run: git submodule sync && git submodule update --init
 
             # - save_cache:
             #     paths:
@@ -37,31 +27,35 @@ jobs:
             #     key: v1-dependencies-{{ checksum "requirements.txt" }}
 
             - run:
+                name: Local build
+                command: |
+                    HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
+            - run:
+                name: Pre-verification
+                command: |
+                    echo Not running htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
+            - run:
+                name: Blog post syndication
+                command: |
+                    echo "Syndication step"
+                    bash .circleci/blog_syndication.sh
+            - run:
                 name: run tests
                 command: |
-                  . venv/bin/activate
-                  echo "Tests here"
-                  # TODO tests
+                    echo "Tests here"
 
     deploy:
         docker:
-            - image: circleci/python:3.6.1
+            - image: aagnone/circleci-hugo:latest
+              user: user
         steps:
             - checkout
 
             - run:
-                name: install dependencies
-                command: |
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip install -r syndication/src/requirements.txt
-                    sudo apt-get update && sudo apt-get install -y rsync vim hugo
-
-            - run:
                   name: Deploy to website
                   command: |
-                      . venv/bin/activate
-                      bash .circleci/blog_syndication.sh
+                      echo "Hi deploy"
+                      # bash .circleci/blog_syndication.sh
 
             - store_artifacts:
                 path: deploy.log

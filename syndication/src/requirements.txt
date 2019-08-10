@@ -1,6 +1,0 @@
-python-twitter
-numpy
-pandas
-python-frontmatter
-Jinja2
-PyGithub

@@ -2,10 +2,50 @@
 REMOTE_HOST ?= website
 STAGE_DIR ?= staging
 SITE_NAME ?= anthonyagnone.com
+HUGO_BUILD_DIR ?= /opt/hugo/public
+IMAGE ?= aagnone/circleci-hugo
+TAG ?= latest
 
 .PHONY: help
 help: ## Display help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
+
+.PHONY: enter
+enter:
+	docker run \
+		-ti \
+		--mount type=bind,source="$(shell pwd)",target=/opt/hugo \
+		--rm \
+		$(IMAGE) \
+		bash
+
+.PHONY: clean
+clean:
+	@rm -rf public
+	@find . -type f -name "*.pyc" -delete
+	@find . -type f -name __pycache__ | xargs rm -rf
+
+.PHONY: init
+init: clean
+	git submodule sync && git submodule update --init
+
+.PHONY: site
+site: clean  ## Build static site
+	hugo -v -d $(HUGO_BUILD_DIR)
+
+.PHONY: verify
+verify: site
+	htmlproofer $(HUGO_BUILD_DIR) \
+		--allow-hash-href \
+		--check-html \
+		--empty-alt-ignore \
+		--disable-external
+
+.PHONY: server
+local_server:  ## Start a local server for the site
+	hugo server \
+		-D \
+		--disableFastRender
 
 .PHONY: stage
 stage: ## Transfer to staging directory on remote host
