@@ -8,7 +8,7 @@ jobs:
             - image: aagnone/circleci-hugo:latest
               user: user
         environment:
-            HUGO_BUILD_DIR: /opt/hugo/public
+            HUGO_BUILD_DIR: /home/user/public
         steps:
             - checkout
 

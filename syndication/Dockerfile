@@ -18,8 +18,7 @@ VOLUME /opt
 RUN mkdir /opt/hugo && \
     chown user:group /opt/hugo
 
-WORKDIR /opt/hugo
-COPY . /opt/hugo/
+COPY . .
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install -r requirements.txt
 
