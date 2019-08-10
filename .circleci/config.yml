@@ -6,7 +6,7 @@ jobs:
     build:
         docker:
             - image: aagnone/circleci-hugo:latest
-            user: user
+              user: user
         environment:
             HUGO_BUILD_DIR: /opt/hugo/public
         steps:
@@ -47,7 +47,7 @@ jobs:
     deploy:
         docker:
             - image: aagnone/circleci-hugo:latest
-            user: user
+              user: user
         steps:
             - checkout
 
