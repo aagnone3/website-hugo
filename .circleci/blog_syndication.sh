@@ -35,7 +35,7 @@ function pull_request() {
 }
 
 # use a diff to detect and syndicate any new blog posts
-[[ ! -z ${diff_output} ]] && {
+if [ ! -z ${diff_output} ]; then
     echo "Looking at diff output"
 
     # dump blog-specific file additions to a file for reading
@@ -56,8 +56,9 @@ function pull_request() {
             python3 syndication content/post/${name}/index.md -d ${is_deploy}
         done < /tmp/new_files.lst
     }
-} || {
+    echo "Done looking at diff output"
+else
     # no new blogs, still need to return to active branch
     echo "No diff output"
     git checkout ${CIRCLE_BRANCH}
-}
+fi
