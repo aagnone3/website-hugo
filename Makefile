@@ -2,7 +2,7 @@
 REMOTE_HOST ?= website
 STAGE_DIR ?= staging
 SITE_NAME ?= anthonyagnone.com
-HUGO_BUILD_DIR ?= /opt/hugo/public
+HUGO_BUILD_DIR ?= /home/user/public
 IMAGE ?= aagnone/circleci-hugo
 TAG ?= latest
 
@@ -16,7 +16,7 @@ else
     define DOCKER_INVOCATION
     docker run \
 		-ti \
-		--mount type=bind,source="$(shell pwd)",target=/opt/hugo \
+		--mount type=bind,source="$(shell pwd)",target=/home/user \
 		--rm \
 		$(IMAGE) \
 		$(MAKE) -f Makefile.ci TARGET
@@ -27,20 +27,29 @@ endif
 help: ## Display help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
 
+.PHONY: enter
+enter: ## Enter a shell in the Docker container
+	docker run \
+		-ti \
+		--mount type=bind,source="$(shell pwd)",target=/home/user \
+		--rm \
+		$(IMAGE) \
+		bash
+
 .PHONY: clean
-clean:  ## Build static site
+clean:  ## Clear out temporary files
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: init
-init: clean
+init: clean ## Initialize git submodules
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: site
-site: init  ## Build static site
+site: clean  ## Build static site
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: verify
-verify: site
+verify: site ## Perform verifications on the generated site
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: server

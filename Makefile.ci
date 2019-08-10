@@ -2,7 +2,7 @@
 REMOTE_HOST ?= website
 STAGE_DIR ?= staging
 SITE_NAME ?= anthonyagnone.com
-HUGO_BUILD_DIR ?= /opt/hugo/public
+HUGO_BUILD_DIR ?= /home/user/public
 IMAGE ?= aagnone/circleci-hugo
 TAG ?= latest
 
@@ -10,23 +10,14 @@ TAG ?= latest
 help: ## Display help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
 
-.PHONY: enter
-enter:
-	docker run \
-		-ti \
-		--mount type=bind,source="$(shell pwd)",target=/opt/hugo \
-		--rm \
-		$(IMAGE) \
-		bash
-
 .PHONY: clean
-clean:
+clean:  ## Clear out temporary files
 	@rm -rf public
 	@find . -type f -name "*.pyc" -delete
 	@find . -type f -name __pycache__ | xargs rm -rf
 
 .PHONY: init
-init: clean
+init: clean ## Initialize git submodules
 	git submodule sync && git submodule update --init
 
 .PHONY: site
@@ -34,7 +25,7 @@ site: clean  ## Build static site
 	hugo -v -d $(HUGO_BUILD_DIR)
 
 .PHONY: verify
-verify: site
+verify: site ## Perform verifications on the generated site
 	htmlproofer $(HUGO_BUILD_DIR) \
 		--allow-hash-href \
 		--check-html \

@@ -13,13 +13,9 @@ RUN apk update && apk add \
 RUN addgroup -g 1000 -S group
 RUN adduser -u 1000 -S user -G group
 
-# set up a working directory in /opt volume
-VOLUME /opt
-RUN mkdir /opt/hugo && \
-    chown user:group /opt/hugo
-
 COPY . .
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install -r requirements.txt
 
+WORKDIR /home/user
 USER user
