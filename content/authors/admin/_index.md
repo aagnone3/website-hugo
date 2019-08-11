@@ -21,10 +21,10 @@ organizations:
 bio: My research interests include signal processing, maching learning, and everything else software.
 
 interests:
-- Audio and Image Processing
-- Machine Learning
-- Software Engineering
-- Gardening
+- Audio & image processing
+- Machine learning
+- Software engineering
+- and...gardening?
 
 education:
   courses:
