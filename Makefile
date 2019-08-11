@@ -46,7 +46,7 @@ init: clean ## Initialize git submodules
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: site
-site: clean ## Build static site
+site: init ## Build static site
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: verify
