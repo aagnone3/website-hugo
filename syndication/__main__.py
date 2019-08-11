@@ -56,9 +56,9 @@ def main():
                 print('But not')
                 # api.post(post, summary)
             else:
-                print('(Globally) not deploying to {}'.format(site))
+                print('Deploy flag down --> not deploying to {}'.format(site))
         else:
-            print('(Selectively) not deploying to {}'.format(site))
+            print('Per configuration, not deploying to {}'.format(site))
 
 
 if __name__ == '__main__':
