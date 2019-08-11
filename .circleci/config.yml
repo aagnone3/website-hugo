@@ -7,18 +7,8 @@ jobs:
         docker:
             - image: aagnone/circleci-hugo:latest
               user: user
-              # environment:
-              #     HUGO_BUILD_DIR: /home/user/project/public
         steps:
             - checkout
-              # - run:
-              #     name: Local build
-              #     command: |
-              #         HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
-              # - run:
-              #     name: Pre-verification
-              #     command: |
-              #         echo Not running htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
             - run:
                 name: Blog post syndication
                 command: |
