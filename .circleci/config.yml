@@ -7,8 +7,8 @@ jobs:
         docker:
             - image: aagnone/circleci-hugo:latest
               user: user
-        environment:
-            HUGO_BUILD_DIR: /home/user/public
+              # environment:
+              #     HUGO_BUILD_DIR: /home/user/project/public
         steps:
             - checkout
               # - run:

@@ -22,7 +22,7 @@ init: ## Initialize git submodules
 
 .PHONY: site
 site: ## Build static site
-	hugo -v -d $(HUGO_BUILD_DIR)
+	hugo -v # -d $(HUGO_BUILD_DIR)
 
 .PHONY: verify
 verify: ## Perform verifications on the generated site
