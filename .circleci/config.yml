@@ -11,21 +11,7 @@ jobs:
             HUGO_BUILD_DIR: /home/user/public
         steps:
             - checkout
-
-            # # Download and cache dependencies
-            # - restore_cache:
-            #     keys:
-            #       - v1-dependencies-{{ checksum "requirements.txt" }}
-            #       # fallback to using the latest cache if no exact match is found
-            #       - v1-dependencies-
-
             - run: git submodule sync && git submodule update --init
-
-            # - save_cache:
-            #     paths:
-            #       - ./venv
-            #     key: v1-dependencies-{{ checksum "requirements.txt" }}
-
             - run:
                 name: Local build
                 command: |
