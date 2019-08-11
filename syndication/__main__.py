@@ -53,12 +53,11 @@ def main():
             persist(post, make_out_file(args.in_file, site))
             if args.deploy:
                 print('Deploying to {}'.format(site))
-                print('But not')
-                # api.post(post, summary)
+                api.post(post, summary)
             else:
-                print('(Globally) not deploying to {}'.format(site))
+                print('Deploy flag down --> not deploying to {}'.format(site))
         else:
-            print('(Selectively) not deploying to {}'.format(site))
+            print('Per configuration, not deploying to {}'.format(site))
 
 
 if __name__ == '__main__':
