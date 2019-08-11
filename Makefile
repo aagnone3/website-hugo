@@ -17,6 +17,7 @@ else
     docker run \
 		-ti \
 		--mount type=bind,source="$(shell pwd)",target=/home/user \
+		--mount type=bind,source=$(HOME)/.ssh,target=/home/user/.ssh \
 		--rm \
 		$(IMAGE) \
 		$(MAKE) -f Makefile.ci TARGET
