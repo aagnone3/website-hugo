@@ -11,20 +11,19 @@ jobs:
             HUGO_BUILD_DIR: /home/user/public
         steps:
             - checkout
-            - run: git submodule sync && git submodule update --init
-            - run:
-                name: Local build
-                command: |
-                    HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
-            - run:
-                name: Pre-verification
-                command: |
-                    echo Not running htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
+              # - run:
+              #     name: Local build
+              #     command: |
+              #         HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
+              # - run:
+              #     name: Pre-verification
+              #     command: |
+              #         echo Not running htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html --empty-alt-ignore --disable-external
             - run:
                 name: Blog post syndication
                 command: |
                     echo "Syndication step"
-                    bash .circleci/blog_syndication.sh
+                    bash .circleci/blog_syndication.sh 2>&1 | tee deploy.log
             - store_artifacts:
                 path: deploy.log
 workflows:

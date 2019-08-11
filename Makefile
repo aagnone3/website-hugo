@@ -37,7 +37,7 @@ enter: ## Enter a shell in the Docker container
 		bash
 
 .PHONY: clean
-clean:  ## Clear out temporary files
+clean: ## Clear out temporary files
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: init
@@ -45,7 +45,7 @@ init: clean ## Initialize git submodules
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: site
-site: clean  ## Build static site
+site: clean ## Build static site
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: verify
@@ -53,13 +53,13 @@ verify: site ## Perform verifications on the generated site
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: server
-local_server:  ## Start a local server for the site
+local_server: ## Start a local server for the site
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: stage
-stage: ## Transfer to staging directory on remote host
+stage: verify ## Transfer to staging directory on remote host
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: deploy
-deploy: ## Transfer to deploy directory on remote host
+deploy: verify ## Transfer to deploy directory on remote host
 	$(subst TARGET,$@,${DOCKER_INVOCATION})
