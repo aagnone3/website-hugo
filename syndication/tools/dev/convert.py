@@ -34,4 +34,4 @@ class DevConverter(BaseConverter):
             canonical_url='{site_name}/blog/{title}'.format(site_name=self.site, title=post_dir.split(os.path.sep)[-1]),
             body=body
         )
-        return frontmatter.loads(body)
+        return frontmatter.loads(body), matter
