@@ -26,11 +26,11 @@ function pull_request() {
 
 [[ "${target_branch}" == "${CIRCLE_BRANCH}" ]] && {
     is_deploy=1
-    make deploy
+    make deploy || /bin/false
     master_update
 } || {
     is_deploy=0
-    make stage
+    make stage || /bin/false
     pull_request
 }
 
