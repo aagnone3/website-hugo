@@ -40,8 +40,16 @@ local_server:  ## Start a local server for the site
 
 .PHONY: stage
 stage: ## Transfer to staging directory on remote host
-	rsync -e 'ssh -o BatchMode=yes -F etc/ssh_cfg' -azru . $(REMOTE_HOST):$(STAGE_DIR)/$(SITE_NAME)
+	rsync \
+		-e 'ssh -o BatchMode=yes -F etc/ssh_cfg' \
+		--delete \
+		-azru \
+		. $(REMOTE_HOST):$(STAGE_DIR)/$(SITE_NAME)
 
 .PHONY: deploy
 deploy: ## Transfer to deploy directory on remote host
-	rsync -e 'ssh -o BatchMode=yes -F etc/ssh_cfg' -azru . $(REMOTE_HOST):$(SITE_NAME)
+	rsync \
+		-e 'ssh -o BatchMode=yes -F etc/ssh_cfg' \
+		--delete \
+		-azru \
+		. $(REMOTE_HOST):$(SITE_NAME)
