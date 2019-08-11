@@ -53,8 +53,7 @@ def main():
             persist(post, make_out_file(args.in_file, site))
             if args.deploy:
                 print('Deploying to {}'.format(site))
-                print('But not')
-                # api.post(post, summary)
+                api.post(post, summary)
             else:
                 print('Deploy flag down --> not deploying to {}'.format(site))
         else:
