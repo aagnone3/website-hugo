@@ -9,8 +9,7 @@ TAG ?= latest
 # execute the commands in the Docker container if on a circleci instance
 ifdef CIRCLE_BRANCH
     define DOCKER_INVOCATION
-    $(MAKE) -f \
-		Makefile.ci TARGET
+    $(MAKE) -f Makefile.ci TARGET
     endef
 else
     define DOCKER_INVOCATION
