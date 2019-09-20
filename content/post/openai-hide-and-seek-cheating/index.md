@@ -8,7 +8,7 @@ authors:
 
 date: "2019-09-20T09:15:05Z"
 featured: false
-draft: true
+draft: false
 slug: /openai-hide-and-seek-cheating
 
 categories:
