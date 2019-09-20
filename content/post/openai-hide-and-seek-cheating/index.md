@@ -3,6 +3,10 @@ title: "OpenAI's Hide-and-Seek Findings: The Systems Perspective"
 subtitle: The agents cheated, but what does that mean for the system
 summary: The agents cheated, but what does that mean for the system
 publication: Towards Data Science
+platforms:
+    - medium
+    - dev
+    - twitter
 authors:
 - anthonyagnone
 
