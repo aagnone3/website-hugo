@@ -1,7 +1,7 @@
 ---
 title: "OpenAI's Hide-and-Seek Findings: The Systems Perspective"
-subtitle: The agents cheated, but let's talk about the system
-summary: The agents cheated, but let's talk about the system
+subtitle: The agents cheated, but what does that mean for the system
+summary: The agents cheated, but what does that mean for the system
 publication: Towards Data Science
 authors:
 - anthonyagnone
@@ -72,11 +72,13 @@ Analyze how different incentive/response systems _induce_ different agent strate
 The field of reinforcement learning is progressing wonderfully, especially in recent years. We've gone from checkers solvers to a Go champion in just a few decades -- our _agent modeling_ is getting pretty dang good.
 Now, how about our _multi-agent environment modeling?_
 
+# Multi-Agent Environment Design
 OpenAI has certainly thought about it. Per their final paragraph,
 
 > Building environments is not easy and it is quite often the case that agents find a way to exploit the environment you build or the physics engine in an unintended way.
 
-A great [article on reward function design][1] written by [@BonsaiAI][2] on Medium mentions that "you get what you incentivize, not [necessarily] what you intend."
+A great [article on reward function design](https://medium.com/@BonsaiAI/deep-reinforcement-learning-models-tips-tricks-for-writing-reward-functions-a84fe525e8e0)
+written by [@BonsaiAI](https://medium.com/@BonsaiAI) on Medium mentions that "you get what you incentivize, not [necessarily] what you intend."
 That beautifully summarizes the inherent dilemma in designing a reward system for a certain outcome.
 You certainly have your mental picture of how your system of incentives will lead to the system as a whole reaching the desired state(s), but have you considered all of the minute ways in which your system may have some "cracks" in it?
 Obviously, this is easier said than done. This divergence of "intent vs outcome" is readily seen in our daily lives, whether professionally or not:
@@ -98,6 +100,7 @@ If it should be doing something different than what it is now, then it should be
 Now, we may have _intended_ for the system to be doing one thing, but that may or may not actually be the final design.
 However, regardless of intent, what is happening is a _perfect rendition of the system that was chosen_.
 
+# A New Frontier
 I'm excited to see more theory develop around effective design of environmental incentive systems, especially in multi-agent scenarios.
 The applications for theory like this are littered in our daily lives, and are even among the most important questions we seek to answer with regard to living amongst each other.
 Here are some examples:
@@ -110,6 +113,7 @@ For example, I imagine there is a plethora of historical publication on system-l
 However, all of this precedence is going to soon be married with the recent advances in multi-agent RL.
 The important similarities and differences between these theory families has the potential to lead to an explosion of knowledge and application in topics of human systems and computer-agent systems alike.
 
+# Conclusion
 Systems will always be gamed, whether the agents are human or digital.
 
 What are your thoughts on effective ways to prevent/detect/fight the exploitation of incentive systems?
@@ -119,8 +123,5 @@ What are some interesting "timeless" academic works you know of, which analyze h
 How about the same for reward design in multi-agent RL?
 
 What other applications do you see here that I didn't touch on?
-
-[1]: https://medium.com/@BonsaiAI/deep-reinforcement-learning-models-tips-tricks-for-writing-reward-functions-a84fe525e8e0
-[2]: https://medium.com/@BonsaiAI
 
 [^1]: I'm looking forward to the day where an electoral candiate's proposed policies can be evaluated by simulation, rendering the circus of televised debates useless
