@@ -29,6 +29,7 @@ class MediumConverter(BaseConverter):
             title=matter['title'],
             subtitle=matter['subtitle'],
             published='false',
+            publication=matter.get('publications', {}).get('medium', ''),
             tags=matter['tags'],
             cover_image='{site_name}/blog{slug}/featured{ext}'.format(site_name=self.site, slug=matter['slug'], ext=image_ext),
             canonical_url='{site_name}/blog/{title}'.format(site_name=self.site, title=post_dir.split(os.path.sep)[-1]),

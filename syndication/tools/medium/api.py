@@ -38,8 +38,8 @@ class MediumAPI(object):
         }
 
     def post(self, body, matter, publish=False, **kwargs):
-        publication = matter.get('publication')
-        should_publish = 'public' if publish and publication is None else 'draft'
+        publication = matter.get('publication', '')
+        should_publish = 'public' if publish and publication == '' else 'draft'
         response = self.session.post(
             '{endpoint}/users/{uid}/posts'.format(endpoint=self.endpoint, uid=self.user_id), json={
                 'title': body['title'],

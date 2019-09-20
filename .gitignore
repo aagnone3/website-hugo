@@ -1,6 +1,7 @@
 ##########################
 # @aagnone3 custom
 content/post/test/*
+content/post/skeleton/*
 public/
 resources/_gen/images/blog/test
 ##########################
