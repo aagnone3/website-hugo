@@ -1,38 +1,8 @@
----
-title: "OpenAI's Hide-and-Seek Findings, the Systems Perspective"
-subtitle: "Yes, the agents cheated, but what does that mean for the system?"
-summary: "Yes, the agents cheated, but what does that mean for the system?"
-publication: Towards Data Science
-platforms:
-    - medium
-authors:
-    - anthonyagnone
-
-date: "2019-09-20T09:15:05Z"
-featured: false
-draft: false
-slug: /openai-hide-and-seek-cheating
-
-categories:
-    - data
-
-tags:
-    - machine-learning
-    - reinforcement-learning
-    - incentives
-    - systems
-    - MARL
-
-image:
-    placement: 2
-    caption: ""
-    focal_point: ""
-    preview_only: false
----
-
+# OpenAI's Hide-and-Seek Findings, the Systems Perspective
+## Yes, the agents cheated, but what does that mean for the system?
 OpenAI released a [fantastic piece](https://openai.com/blog/emergent-tool-use/) on some results obtained in a multi-agent hide-and-seek simulation, in which multiple hiders and multiple seekers play the popular children's game.
 
-{{< figure src="img/openai-hide-and-seek.gif" title="Environment demo" >}}
+![Environment demo](https://anthonyagnone.com/img/openai-hide-and-seek.gif)
 
 The simulation had some interesting aspects to it, such as tools (boxes, ramps, walls) that the agents could use to aid them in achieving their objective of effective hiding/seeking.
 However, the more notable result is that extended simulation of the environment led to _emergent behavior_; that is, behavior that is fundamentally unplanned or unexpected.
@@ -41,7 +11,7 @@ For example, some of the expected behavior is that the hiders would eventually l
 This way, the ramps cannot be used to go over the walls and into the built enclosure from above.
 Now, what the environment designers did not expect (the emergent behavior) is that the seekers would learn that they could use the ramp to get on top of a box, and then use a running motion to essentially "surf" the box anywhere they pleased!
 
-{{< figure src="img/openai-box-surfing.png" title="Box surfing" >}}
+![Box surfing](https://anthonyagnone.com/img/openai-box-surfing.png)
 
 Using this method, the seekers found a way to access the hider-built enclosures from above that was not intended by the designers of the system!
 
@@ -55,7 +25,7 @@ While it may be in a state that the designers did not explicitly intend to creat
 
 Thus, the hiders learned to paralyze the seekers' ability to surf boxes!
 
-{{< figure src="img/openai-surf-defense.png" title="Surf defense" >}}
+![Surf defense](https://anthonyagnone.com/img/openai-surf-defense.png)
 
 They did this by using the pre-allocated initial time in which the seekers are frozen to _lock all of the boxes and ramps_.
 Then, they use any time left to construct a quick enclosure with the movable walls and then lock the walls.
