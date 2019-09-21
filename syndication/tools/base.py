@@ -31,6 +31,18 @@ class BaseConverter(object):
             body
         )
 
+    def format_image_links(self, body):
+        '''
+        # example
+        {{< figure src="image.jpg" title="A caption" lightbox="true" >}}
+        ![A caption](https://anthonyagnone.com/img/
+        '''
+        return re.sub(
+            r'{{\< figure src="(.*)\.([a-zA-Z0-9_]+)" title="([a-zA-Z0-9_ ]+)".*\>}}',
+            r'![\3]({site_name}/\1.\2)'.format(site_name=self.site),
+            body
+        )
+
     @abstractmethod
     def get_template(self):
         pass

@@ -23,6 +23,7 @@ class MediumConverter(BaseConverter):
             return None
 
         body = self.format_static_links(matter.content)
+        body = self.format_image_links(body)
         image_ext, post_dir = self.get_image_ext(in_file)
 
         body = self.get_template().render(

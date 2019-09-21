@@ -48,7 +48,7 @@ class MediumAPI(object):
                 'canonicalUrl': body['canonical_url'],
                 'tags': body['tags'].split(','),
                 'publishStatus': should_publish,
-                'publicationId': self.publications.get(publication, ''),
+                # 'publicationId': self.publications.get(publication, ''),
                 'notifyFollowers': publish
             })
         self.__check_response(response)

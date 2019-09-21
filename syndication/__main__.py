@@ -20,7 +20,7 @@ def parse_args():
         help='Whether this is a deploy.'
     )
     args = parser.parse_args()
-    args.deploy = bool(args.deploy)
+    args.deploy = bool(int(args.deploy))
     return args
 
 

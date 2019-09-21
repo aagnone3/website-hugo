@@ -7,6 +7,7 @@ IMAGE ?= aagnone/circleci-hugo
 TAG ?= latest
 
 # execute the commands in the Docker container if on a circleci instance
+# TODO if not, plug in environment variables also
 ifdef CIRCLE_BRANCH
     define DOCKER_INVOCATION
     $(MAKE) -f Makefile.ci TARGET
@@ -15,6 +16,18 @@ else
     define DOCKER_INVOCATION
     docker run \
 		-ti \
+		-e DEV_API_TOKEN=${DEV_API_TOKEN} \
+		-e DEV_ARTICLES_URL=${DEV_ARTICLES_URL} \
+		-e DEV_URL=${DEV_URL} \
+		-e MEDIUM_API_URL=${MEDIUM_API_URL} \
+		-e MEDIUM_API_VERSION=${MEDIUM_API_VERSION} \
+		-e MEDIUM_CLIENT_ID=${MEDIUM_CLIENT_ID} \
+		-e MEDIUM_CLIENT_SECRET=${MEDIUM_CLIENT_SECRET} \
+		-e MEDIUM_INTEGRATION_TOKEN=${MEDIUM_INTEGRATION_TOKEN} \
+		-e TWITTER_ACCESS_TOKEN_KEY=${TWITTER_ACCESS_TOKEN_KEY} \
+		-e TWITTER_ACCESS_TOKEN_SECRET=${TWITTER_ACCESS_TOKEN_SECRET} \
+		-e TWITTER_CONSUMER_KEY=${TWITTER_CONSUMER_KEY} \
+		-e TWITTER_CONSUMER_SECRET=${TWITTER_CONSUMER_SECRET} \
 		--mount type=bind,source="$(shell pwd)",target=/home/user \
 		--mount type=bind,source=$(HOME)/.ssh,target=/home/user/.ssh \
 		--rm \
@@ -27,14 +40,13 @@ endif
 help: ## Display help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
 
-.PHONY: enter
-enter: ## Enter a shell in the Docker container
-	docker run \
-		-ti \
-		--mount type=bind,source="$(shell pwd)",target=/home/user \
-		--rm \
-		$(IMAGE) \
-		bash
+.PHONY: test
+test: ## Enter a shell in the Docker container
+	$(subst TARGET,$@,${DOCKER_INVOCATION})
+
+.PHONY: shell
+shell: ## Enter a shell in the Docker container
+	$(subst TARGET,$@,${DOCKER_INVOCATION})
 
 .PHONY: clean
 clean: ## Clear out temporary files

@@ -9,6 +9,14 @@ TAG ?= latest
 help: ## Display help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
 
+.PHONY: test
+test:  ## Enter a shell in the Docker container
+	python3 test.py
+
+.PHONY: shell
+shell:  ## Enter a shell in the Docker container
+	bash
+
 .PHONY: clean
 clean: ## Clear out temporary files
 	@rm -rf public
