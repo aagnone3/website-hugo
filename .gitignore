@@ -4,6 +4,8 @@ content/post/test/*
 content/post/skeleton/*
 public/
 resources/_gen/images/blog/test
+.bash_history
+.viminfo
 ##########################
 
 .DS_Store
