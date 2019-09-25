@@ -39,6 +39,7 @@ if [[ ! -z ${diff_output} ]]; then
     echo "Looking at diff output"
 
     # dump blog-specific file additions to a file for reading
+    # note: --diff-filter=A filters for additions, and does not match for e.g. modifications
     git diff --diff-filter=A ..${CIRCLE_BRANCH} | grep 'diff.*content\/.*index\.md' > /tmp/new_files.lst || true
     n_new_blogs=$(cat /tmp/new_files.lst | wc -l)
     echo "Found $n_new_blogs new blog posts to syndicate"
