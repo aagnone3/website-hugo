@@ -14,6 +14,8 @@ date: "2019-07-10T18:11:01Z"
 featured: false
 draft: false
 slug: /reproducible-data-processing-make-docker
+aliases:
+  - /2019/05/24/towards-efficient-and-reproducible-ml-workflows-part-1-analysis/
 
 categories:
   - data
