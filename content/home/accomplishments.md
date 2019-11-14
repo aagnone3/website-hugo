@@ -38,4 +38,14 @@ date_format = "Jan 2006"
   date_end = "2019-09-09"
   description = "Deep Reinforcement Learning with Python and Pytorch"
 
+[[item]]
+  organization = "Udacity"
+  organization_url = "https://www.udacity.com/"
+  title = "Data Engineering"
+  url = "https://www.udacity.com/course/data-engineer-nanodegree--nd027"
+  certificate_url = "https://graduation.udacity.com/confirm/HGQQFH42"
+  date_start = "2019-08-01"
+  date_end = "2019-11-09"
+  description = "Data Engineering"
+
 +++
