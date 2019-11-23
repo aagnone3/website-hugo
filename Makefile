@@ -28,6 +28,7 @@ else
 		-e TWITTER_ACCESS_TOKEN_SECRET=${TWITTER_ACCESS_TOKEN_SECRET} \
 		-e TWITTER_CONSUMER_KEY=${TWITTER_CONSUMER_KEY} \
 		-e TWITTER_CONSUMER_SECRET=${TWITTER_CONSUMER_SECRET} \
+		-p 1313:1313 \
 		--mount type=bind,source="$(shell pwd)",target=/home/user \
 		--mount type=bind,source=$(HOME)/.ssh,target=/home/user/.ssh \
 		--rm \

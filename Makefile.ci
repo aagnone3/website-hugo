@@ -43,6 +43,7 @@ verify: ## Perform verifications on the generated site
 .PHONY: server
 local_server: ## Start a local server for the site
 	hugo server \
+		--bind 0.0.0.0 \
 		-D \
 		--disableFastRender
 
