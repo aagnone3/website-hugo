@@ -1,7 +1,7 @@
 ---
 title: "Another One in the Books 2019/11/23"
-subtitle: ""
-summary: ""
+subtitle: "Another One in the Books!"
+summary: "Another One in the Books!"
 publication:
 platforms:
     - medium
