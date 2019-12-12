@@ -30,7 +30,7 @@ else
 		-e TWITTER_CONSUMER_SECRET=${TWITTER_CONSUMER_SECRET} \
 		-p 1313:1313 \
 		--mount type=bind,source="$(shell pwd)",target=/home/user \
-		--mount type=bind,source=$(HOME)/.ssh,target=/home/user/.ssh \
+		--mount type=bind,source="$(HOME)/.ssh",target=/home/user/.ssh \
 		--rm \
 		$(IMAGE) \
 		$(MAKE) -f Makefile.ci TARGET

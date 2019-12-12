@@ -15,7 +15,7 @@ image: ## Build the container
 run: ## Run the container
 	docker run \
 		-ti \
-		--mount type=bind,source="$(shell pwd)",target=/opt/hugo \
+		--mount type=bind,source="$(shell echo ${PWD}/../)",target=/opt/hugo \
 		--rm \
 		$(IMAGE) \
 		bash
