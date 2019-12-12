@@ -11,9 +11,10 @@ class BaseConverter(object):
     def __init__(self, site, name):
         self.site = site
         self.name = name
+        self.platform_info = None
 
     def should_process(self, matter):
-        return self.name in matter.get('platforms', list())
+        return self.name in matter.get('platforms', {})
 
     def format_static_links(self, body):
         '''
@@ -35,7 +36,7 @@ class BaseConverter(object):
         '''
         # example
         {{< figure src="image.jpg" title="A caption" lightbox="true" >}}
-        ![A caption](https://anthonyagnone.com/img/
+        ![A caption](https://anthonyagnone.com/img/)
         '''
         return re.sub(
             r'{{\< figure src="(.*)\.([a-zA-Z0-9_]+)" title="([a-zA-Z0-9_ ]+)".*\>}}',
