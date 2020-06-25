@@ -21,6 +21,16 @@ date_format = "Jan 2006"
 [[item]]
   organization = "Udacity"
   organization_url = "https://www.udacity.com/"
+  title = "AWS Cloud Developer"
+  url = "https://www.udacity.com/course/cloud-developer-nanodegree--nd9990"
+  certificate_url = "https://confirm.udacity.com/WZW2GWSZ"
+  date_start = "2020-04-01"
+  date_end = "2020-06-20"
+  description = "AWS Cloud Developer (Microservices, Kubernetes, Serverless)"
+
+[[item]]
+  organization = "Udacity"
+  organization_url = "https://www.udacity.com/"
   title = "Natural Language Processing"
   url = "https://www.udacity.com/course/natural-language-processing-nanodegree--nd892"
   certificate_url = "https://confirm.udacity.com/U6GKVP4E"
@@ -47,5 +57,15 @@ date_format = "Jan 2006"
   date_start = "2019-08-01"
   date_end = "2019-11-09"
   description = "Data Engineering"
+
+[[item]]
+  organization = "Udacity"
+  organization_url = "https://www.udacity.com/"
+  title = "Computer Vision"
+  url = "https://www.udacity.com/course/computer-vision-nanodegree--nd891"
+  certificate_url = "https://confirm.udacity.com/57P2CQ5J"
+  date_start = "2019-12-01"
+  date_end = "2020-04-27"
+  description = "Compute Vision"
 
 +++
